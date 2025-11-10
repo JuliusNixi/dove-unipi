@@ -23,12 +23,16 @@
 - [Perchè?](#perchè)
 - [Struttura del progetto](#struttura-del-progetto)
 - [rooms.json](#roomsjson)
+- [Flowchart](#flowchart)
+  - [Flusso Dati](#flusso-dati)
+  - [Architettura del Progetto](#architettura-del-progetto)
 - [Funzionalità](#funzionalità)
   - [SPA](#spa)
     - [Ricerca intelligente](#ricerca-intelligente)
     - [Accessibilità](#accessibilità)
     - [Keyboard shortcuts](#keyboard-shortcuts)
     - [Path sharing](#path-sharing)
+    - [Lingue supportate](#lingue-supportate)
   - [Funzionalità che vorrei aggiungere](#funzionalità-che-vorrei-aggiungere)
 - [Problemi noti](#problemi-noti)
   
@@ -38,6 +42,7 @@
 [<img src="https://wsrv.nl/?url=github.com/calba-droid.png?w=64&h=64&mask=circle&fit=cover" width="46" height="46" alt="Calogero Alba" />](https://github.com/calba-droid)
 [<img src="https://wsrv.nl/?url=github.com/plumkewe.png?w=64&h=64&mask=circle&fit=cover" width="46" height="46" alt="Lyubomyr Malay" />](https://github.com/plumkewe)
 [<img src="https://wsrv.nl/?url=github.com/piorpiedev.png?w=64&h=64&mask=circle&fit=cover" width="46" height="46" alt="piorpiedev" />](https://github.com/piorpiedev)
+[<img src="https://wsrv.nl/?url=github.com/L-myself.png?w=64&h=64&mask=circle&fit=cover" width="46" height="46" alt="piorpiedev" />](https://github.com/L-myself)
 
 *Un ringraziamento speciale a chi ha dedicato il proprio tempo per la raccolta dati nelle aule.*
 
@@ -81,7 +86,10 @@ A dimostrazione di ciò, ecco alcuni messaggi reali presi da un gruppo Telegram:
 │   │   └── logo.svg
 │   └── screenshots/
 ├── data/
-│   └── rooms.json <- file importante per far funzionare tutto
+│   └── rooms.json      <- file importante per far funzionare tutto
+├── locales             <- cartella per le traduzioni 
+│   └── en.json
+│   └── it.json
 ├── index.html
 └── polo/ <- dove aggiungere altri poli
     └── fibonacci/
@@ -158,7 +166,12 @@ Contiene tutti i dati su edifici, piani e aule, e l'interfaccia viene costruita 
                 "type": "aula",
                 "note": "",
                 "rete": false,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 380,
+                  "y": 296,
+                  "zoom": 2
+                }
               },
               {
                 "..."
@@ -181,6 +194,77 @@ Contiene tutti i dati su edifici, piani e aule, e l'interfaccia viene costruita 
 }
 ```
 
+## Flowchart
+
+<p align="right">(<a href="#indice">indice</a>)</p>
+
+### Flusso Dati
+
+```mermaid
+graph LR
+    A[Planimetrie UniPi] -->|Conversione DWG/SVG| B[Mappe Edifici]
+    C[University Planner] -->|Dati Aule| D[rooms.json]
+    D --> E[Applicazione Web]
+    B --> E
+    E --> F[Interfaccia Utente]
+```
+
+### Architettura del Progetto
+
+```mermaid
+graph TB
+    Start[Utente apre l'app] --> LoadData[Carica rooms.json]
+    LoadData --> ParseURL{URL contiene<br/>parametri?}
+    
+    ParseURL -->|Sì| URLParams[Estrai p, b, f, v<br/>dall'URL]
+    ParseURL -->|No| DefaultView[Seleziona valori<br/>di default]
+    
+    URLParams --> SelectPolo[Seleziona Polo]
+    DefaultView --> SelectPolo
+    
+    SelectPolo --> BuildUI[Costruisci UI Dinamica]
+    BuildUI --> Sidebar[Popola Sidebar:<br/>Edifici, Piani, Aule]
+    BuildUI --> Map[Carica Mappa Leaflet]
+    
+    Map --> LoadSVG[Carica file SVG<br/>del piano selezionato]
+    LoadSVG --> DisplayMap[Visualizza mappa<br/>interattiva]
+    
+    DisplayMap --> UserActions{Azione Utente}
+    
+    UserActions -->|Cerca aula| Search[Filtra risultati<br/>da rooms.json]
+    Search --> SelectRoom[Seleziona aula]
+    SelectRoom -->|Ha coordinate?| ZoomRoom{Coordinate<br/>disponibili?}
+    
+    ZoomRoom -->|Sì| FlyTo[Centra mappa<br/>sull'aula]
+    ZoomRoom -->|No| DisplayMap
+    
+    FlyTo --> UpdateURL[Aggiorna URL<br/>con parametri]
+    
+    UserActions -->|Cambia edificio/piano| ChangeFloor[Carica nuovo<br/>file SVG]
+    ChangeFloor --> Map
+    
+    UserActions -->|Zoom/Pan| MapInteraction[Interazione<br/>mappa Leaflet]
+    MapInteraction --> UpdateURL
+    
+    UserActions -->|Condividi| ShareLink[Copia URL<br/>negli appunti]
+    ShareLink --> DisplayMap
+    
+    UserActions -->|Apri impostazioni| Settings[Mostra pannello<br/>impostazioni]
+    Settings --> ToggleOptions[Abilita/Disabilita:<br/>Condivisione, Contrasto,<br/>Lingua, etc.]
+    ToggleOptions --> DisplayMap
+    
+    UpdateURL --> DisplayMap
+    
+    style Start fill:#2ea043,stroke:#1a7f37,stroke-width:2px,color:#ffffff
+    style DisplayMap fill:#2ea043,stroke:#1a7f37,stroke-width:2px,color:#ffffff
+    style LoadData fill:#bf8700,stroke:#9a6700,stroke-width:2px,color:#ffffff
+    style Map fill:#0969da,stroke:#0550ae,stroke-width:2px,color:#ffffff
+    style Search fill:#cf222e,stroke:#a40e26,stroke-width:2px,color:#ffffff
+    style Settings fill:#8250df,stroke:#6639ba,stroke-width:2px,color:#ffffff
+```
+
+
+
 ## Funzionalità
 
 <p align="right">(<a href="#indice">indice</a>)</p>
@@ -190,7 +274,8 @@ Contiene tutti i dati su edifici, piani e aule, e l'interfaccia viene costruita 
 
 #### Ricerca intelligente 
 
-Effettua una ricerca non solo sul nome dell’aula ma anche sui suoi **alias**.  
+Effettua una ricerca non solo sul nome dell’aula ma anche sui suoi **alias**. Una volta selezionata, l’aula verrà automaticamente zoomata sulla sua posizione (ovviamente, se le coordinate sono presenti nel file rooms.json).
+
 Supporta inoltre **filtri avanzati**: ad esempio, scrivendo `> 200` verranno mostrate le aule con capienza superiore a 200.  
 Sono supportati gli operatori: `<`, `>`, `==`, `>=`, `<=`.
 
@@ -199,15 +284,18 @@ Da lì puoi abilitare anche le **funzionalità sperimentali**.
 
 Digitando `condividi` o `share`, potrai facilmente copiare il **link al sito** o a questa **repository** per condividerlo.
 
+<hr>
 
 #### Accessibilità 
 
-Attualmente è possibile aggiungere **pulsanti aggiuntivi** per alcune funzioni come **zoom** e **condivisione** ed attivare la **modalità ad alto contrasto**.
+Attualmente è possibile aggiungere **pulsanti aggiuntivi** per alcune funzioni come **zoom** e **condivisione** ed attivare la **modalità ad alto contrasto**. Inoltre, si può anche aumentare **la dimensione del testo.**
 
 Puoi accedere alle **impostazioni di accessibilità** digitando `impostazioni` o `settings` nella barra di ricerca.  
 
 In futuro si prevede di introdurre una **modalità di navigazione basata solo su pulsanti**.
 *(Non garantiamo nulla in questa fase di sviluppo.)*
+
+<hr>
 
 #### Keyboard shortcuts
 
@@ -235,6 +323,7 @@ Al momento sono disponibili le seguenti scorciatoie:
   </tbody>
 </table>
 
+<hr>
 
 #### Path sharing
 
@@ -248,21 +337,25 @@ la parte `?p=fibonacci&b=a&f=0&v=top` farà sì che chi apre il link visualizzi 
 
 Se non funziona, apri la barra di ricerca, digita `impostazioni` e verifica che l’opzione **“Condividi polo/edificio/piano”** sia attiva.
 
-> In fase **alpha** è disponibile anche la condivisione delle **coordinate**: chi apre il link vedrà l’elemento esatto evidenziato sulla mappa.  
-> Tuttavia, questa funzione è ancora instabile.
+È disponibile anche la condivisione delle **coordinate**: chi apre il link vedrà l’elemento esatto evidenziato sulla mappa.
 
+<hr>
+
+#### Lingue supportate
+
+Attualmente sono supportate due lingue: **italiano** e **inglese.**
+In futuro verranno aggiunte altre **lingue!**
+
+Vuoi contribuire? Apri una issue oppure inviami un’email a: lyubomyr.malay@icloud.com **Grazie!**
 
 
 ### Funzionalità che vorrei aggiungere
 
-- [x] **Ricerca intelligente:** Una ricerca che ti auta con il complementamento automatico, e prende in considerazioni i valori alias presenti su rooms.json e altro
 - [ ] **Occupazione aule:** Collegare in qualche modo University Planner da poter vedere le prenotazioni direttamente sul sito
 
 ## Problemi noti
 
 <p align="right">(<a href="#indice">indice</a>)</p>
 
-
-- [ ] **Zoom anomalo:** Lo zoom non si comporta come previsto
 - [ ] **Visibilità bottone su Safari iOS:** Il bottnoe di GitHub nella sidebar non è visibile su Safari per iOS 26
 - [ ] **Mappe non aggiornate:** I nomi di alcune aule sulle planimetrie SVG/DWG non corrispondono a quelli reali.

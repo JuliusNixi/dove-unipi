@@ -1,0 +1,290 @@
+{
+  "app_title": {
+    "original": "DOVE?",
+    "translation": "DOVE?"
+  },
+  "meta_description": {
+    "original": "Orientati facilmente tra gli edifici, i piani e le aule del Polo Fibonacci dell'Università di Pisa.",
+    "translation": "Orientati facilmente tra gli edifici, i piani e le aule del Polo Fibonacci dell'Università di Pisa."
+  },
+  "meta_og_title": {
+    "original": "DOV'È QUEL AULA?! DOVEEEEE!!!",
+    "translation": "DOV'È QUEL AULA?! DOVEEEEE!!!"
+  },
+  "meta_og_description": {
+    "original": "So che ti sei perso al polo Fibonacci dell'Università di Pisa. Usa DOVE? UniPi per trovare le aule e orientarti tra gli edifici e i piani.",
+    "translation": "So che ti sei perso al polo Fibonacci dell'Università di Pisa. Usa DOVE? UniPi per trovare le aule e orientarti tra gli edifici e i piani."
+  },
+  "search_placeholder": {
+    "original": "Cerca un'aula...",
+    "translation": "Cerca un'aula..."
+  },
+  "search_no_results": {
+    "original": "Nessun risultato trovato",
+    "translation": "Nessun risultato trovato"
+  },
+  "sidebar_open": {
+    "original": "Apri sidebar",
+    "translation": "Apri sidebar"
+  },
+  "sidebar_close": {
+    "original": "Chiudi sidebar",
+    "translation": "Chiudi sidebar"
+  },
+  "buildings_title": {
+    "original": "Edifici",
+    "translation": "Edifici"
+  },
+  "floors_title": {
+    "original": "Piani",
+    "translation": "Piani"
+  },
+  "rooms_title": {
+    "original": "Aule",
+    "translation": "Aule"
+  },
+  "departments_title": {
+    "original": "Dipartimenti",
+    "translation": "Dipartimenti"
+  },
+  "zoom_in": {
+    "original": "Ingrandisci",
+    "translation": "Ingrandisci"
+  },
+  "zoom_out": {
+    "original": "Riduci",
+    "translation": "Riduci"
+  },
+  "zoom_reset": {
+    "original": "Centra visuale",
+    "translation": "Centra visuale"
+  },
+  "share_button": {
+    "original": "Copia link",
+    "translation": "Copia link"
+  },
+  "share_success": {
+    "original": "Link copiato negli appunti!",
+    "translation": "Link copiato negli appunti!"
+  },
+  "share_error": {
+    "original": "Errore nella copia del link",
+    "translation": "Errore nella copia del link"
+  },
+  "view_perspective": {
+    "original": "Vista Prospettica",
+    "translation": "Vista Prospettica"
+  },
+  "view_top": {
+    "original": "Vista dall'alto",
+    "translation": "Vista dall'alto"
+  },
+  "settings_title": {
+    "original": "Impostazioni",
+    "translation": "Impostazioni"
+  },
+  "settings_share_path": {
+    "original": "Condividi polo/edificio/piano",
+    "translation": "Condividi polo/edificio/piano"
+  },
+  "settings_share_path_description": {
+    "original": "Include queste informazioni nel link condiviso",
+    "translation": "Include queste informazioni nel link condiviso"
+  },
+  "settings_share_coordinates": {
+    "original": "Condividi coordinate mappa",
+    "translation": "Condividi coordinate mappa"
+  },
+  "settings_share_coordinates_description": {
+    "original": "Aggiunge posizione e zoom del viewer al link",
+    "translation": "Aggiunge posizione e zoom del viewer al link"
+  },
+  "settings_extra_controls": {
+    "original": "Controlli extra",
+    "translation": "Controlli extra"
+  },
+  "settings_extra_controls_description": {
+    "original": "Mostra pulsante condividi e controlli zoom",
+    "translation": "Mostra pulsante condividi e controlli zoom"
+  },
+  "settings_high_contrast": {
+    "original": "Alto contrasto",
+    "translation": "Alto contrasto"
+  },
+  "settings_high_contrast_description": {
+    "original": "Sfondo bianco con testo nero per migliore accessibilità",
+    "translation": "Sfondo bianco con testo nero per migliore accessibilità"
+  },
+  "settings_text_size": {
+    "original": "Dimensione testo",
+    "translation": "Dimensione testo"
+  },
+  "settings_text_size_description": {
+    "original": "Regola la dimensione del testo della pagina",
+    "translation": "Regola la dimensione del testo della pagina"
+  },
+  "text_size_decrease": {
+    "original": "Riduci dimensione testo",
+    "translation": "Riduci dimensione testo"
+  },
+  "text_size_increase": {
+    "original": "Aumenta dimensione testo",
+    "translation": "Aumenta dimensione testo"
+  },
+  "capacity": {
+    "original": "Capienza",
+    "translation": "Capienza"
+  },
+  "building": {
+    "original": "Edificio",
+    "translation": "Edificio"
+  },
+  "floor": {
+    "original": "Piano",
+    "translation": "Piano"
+  },
+  "campus": {
+    "original": "Polo",
+    "translation": "Polo"
+  },
+  "made_with": {
+    "original": "Fatto con",
+    "translation": "Fatto con"
+  },
+  "made_by": {
+    "original": "da",
+    "translation": "da"
+  },
+  "github_link": {
+    "original": "Visualizza su GitHub",
+    "translation": "Visualizza su GitHub"
+  },
+  "keyboard_shortcut_copy": {
+    "original": "Copia link di condivisione",
+    "translation": "Copia link di condivisione"
+  },
+  "keyboard_shortcut_center": {
+    "original": "Centra visuale",
+    "translation": "Centra visuale"
+  },
+  "share_aria_label": {
+    "original": "Condividi",
+    "translation": "Condividi"
+  },
+  "share_link_copied": {
+    "original": "Link copiato!",
+    "translation": "Link copiato!"
+  },
+  "share_error_short": {
+    "original": "Errore!",
+    "translation": "Errore!"
+  },
+  "no_buildings_message": {
+    "original": "Nessun edificio in questo polo.",
+    "translation": "Nessun edificio in questo polo."
+  },
+  "no_rooms_found": {
+    "original": "Nessuna aula trovata",
+    "translation": "Nessuna aula trovata"
+  },
+  "department_singular": {
+    "original": "Dipartimento",
+    "translation": "Dipartimento"
+  },
+  "map_button": {
+    "original": "Mappa",
+    "translation": "Mappa"
+  },
+  "website_button": {
+    "original": "Sito",
+    "translation": "Sito"
+  },
+  "search_suggestion_settings": {
+    "original": "Prova: Impostazioni",
+    "translation": "Prova: Impostazioni"
+  },
+  "search_suggestion_classroom": {
+    "original": "Prova: Aula D2",
+    "translation": "Prova: Aula D2"
+  },
+  "search_suggestion_capacity": {
+    "original": "Prova: >200",
+    "translation": "Prova: >200"
+  },
+  "search_suggestion_department": {
+    "original": "Prova: Dipartimento",
+    "translation": "Prova: Dipartimento"
+  },
+  "search_suggestion_share": {
+    "original": "Prova: Condividi",
+    "translation": "Prova: Condividi"
+},
+  "back_button": {
+    "original": "Indietro",
+    "translation": "Indietro"
+  },
+  "settings_language": {
+    "original": "Lingua",
+    "translation": "Lingua"
+  },
+  "settings_language_description": {
+    "original": "Seleziona lingua dell'interfaccia",
+    "translation": "Seleziona lingua dell'interfaccia"
+  },
+  "language_italian": {
+    "original": "Italiano",
+    "translation": "Italiano"
+  },
+  "language_english": {
+    "original": "Inglese",
+    "translation": "Inglese"
+  },
+  "github_repository": {
+    "original": "Repository GitHub",
+    "translation": "Repository GitHub"
+  },
+  "room_detail_capacity": {
+    "original": "Capienza: %s",
+    "translation": "Capienza: %s"
+  },
+  "room_detail_accessible": {
+    "original": "Accesso Disabili",
+    "translation": "Accesso Disabili"
+  },
+  "room_detail_not_accessible": {
+    "original": "Mancato Accesso Disabili",
+    "translation": "Mancato Accesso Disabili"
+  },
+  "room_detail_network": {
+    "original": "Accesso di Rete",
+    "translation": "Accesso di Rete"
+  },
+  "room_detail_network_ports": {
+    "original": "Porte di Rete",
+    "translation": "Porte di Rete"
+  },
+  "room_detail_power_outlets": {
+    "original": "Prese Elettriche",
+    "translation": "Prese Elettriche"
+  },
+  "room_detail_computers_count": {
+    "original": "Computer Presenti: %s",
+    "translation": "Computer Presenti: %s"
+  },
+  "room_detail_computers": {
+    "original": "Computer Presenti",
+    "translation": "Computer Presenti"
+  },
+  "room_detail_projector": {
+    "original": "Proiettore",
+    "translation": "Proiettore"
+  },
+  "room_detail_speakers": {
+    "original": "Autoparlanti",
+    "translation": "Autoparlanti"
+  },
+  "room_detail_camera": {
+    "original": "Telecamera fissa",
+    "translation": "Telecamera fissa"
+  }
+}

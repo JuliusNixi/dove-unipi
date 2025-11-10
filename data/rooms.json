@@ -23,7 +23,12 @@
                 "capienza": 16,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 52,
+                  "y": 379,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_x2-b-0",
@@ -36,7 +41,12 @@
                 "capienza": 16,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 54,
+                  "y": 358,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_x3-b-0",
@@ -49,7 +59,12 @@
                 "capienza": 16,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 54,
+                  "y": 334,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_x4-b-0",
@@ -63,7 +78,12 @@
                 "capienza": 6,
                 "proiettore": false,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 61,
+                  "y": 314,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_x5-b-0",
@@ -76,7 +96,12 @@
                 "capienza": 16,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 50,
+                  "y": 246,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_x6-b-0",
@@ -89,7 +114,12 @@
                 "capienza": 16,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 60,
+                  "y": 223,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_x7-b-0",
@@ -102,7 +132,12 @@
                 "capienza": 24,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 104,
+                  "y": 229,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_a-b-0",
@@ -115,7 +150,12 @@
                 "capienza": 217,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 136,
+                  "y": 357,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_b-b-0",
@@ -128,7 +168,12 @@
                 "capienza": 135,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 179,
+                  "y": 356,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_c-b-0",
@@ -141,7 +186,12 @@
                 "capienza": 135,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 217,
+                  "y": 354,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_d-b-0",
@@ -154,7 +204,12 @@
                 "capienza": 215,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 257,
+                  "y": 356,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_e-b-0",
@@ -167,7 +222,12 @@
                 "capienza": 217,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 301,
+                  "y": 355,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_h-lab-b-0",
@@ -180,7 +240,12 @@
                 "capienza": 40,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 136,
+                  "y": 249,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_i-lab-b-0",
@@ -193,7 +258,12 @@
                 "capienza": 30,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 178,
+                  "y": 242,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_l-b-0",
@@ -206,7 +276,12 @@
                 "capienza": 87,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 219,
+                  "y": 240,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_m-lab-b-0",
@@ -219,7 +294,12 @@
                 "capienza": 40,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 256,
+                  "y": 242,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_f-b-0",
@@ -232,7 +312,12 @@
                 "capienza": 112,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 381,
+                  "y": 359,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_g-b-0",
@@ -245,7 +330,12 @@
                 "capienza": 199,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 420,
+                  "y": 357,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_n-b-0",
@@ -258,7 +348,12 @@
                 "capienza": 72,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 380,
+                  "y": 236,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_o-b-0",
@@ -271,7 +366,12 @@
                 "capienza": 36,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 413,
+                  "y": 235,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_p-b-0",
@@ -284,7 +384,12 @@
                 "capienza": 36,
                 "proiettore": false,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 433,
+                  "y": 232,
+                  "zoom": 2
+                }
               }
             ],
             "1": [
@@ -299,7 +404,12 @@
                 "capienza": 137,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 113,
+                  "y": 303,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_b1-b-0",
@@ -312,7 +422,12 @@
                 "capienza": 109,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 158,
+                  "y": 312,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_c1-b-0",
@@ -325,7 +440,12 @@
                 "capienza": 109,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 198,
+                  "y": 311,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_d1-b-0",
@@ -338,7 +458,12 @@
                 "capienza": 137,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 242,
+                  "y": 307,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_e1-b-0",
@@ -351,7 +476,12 @@
                 "capienza": 137,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 285,
+                  "y": 304,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_i1-b-0",
@@ -364,7 +494,12 @@
                 "capienza": 61,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 137,
+                  "y": 176,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_l1-b-0",
@@ -377,7 +512,12 @@
                 "capienza": 69,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 164,
+                  "y": 177,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_m1-b-0",
@@ -390,7 +530,12 @@
                 "capienza": 69,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 193,
+                  "y": 177,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_n1-b-0",
@@ -403,7 +548,12 @@
                 "capienza": 61,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 222,
+                  "y": 175,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_o1-b-0",
@@ -416,7 +566,12 @@
                 "capienza": 60,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 250,
+                  "y": 176,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_p1-b-0",
@@ -429,7 +584,12 @@
                 "capienza": 123,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 287,
+                  "y": 176,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_f1-b-0",
@@ -442,7 +602,12 @@
                 "capienza": 68,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 372,
+                  "y": 318,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_g1-b-0",
@@ -455,7 +620,12 @@
                 "capienza": 61,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 415,
+                  "y": 317,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_v1-b-0",
@@ -468,7 +638,12 @@
                 "capienza": 47,
                 "proiettore": true,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 461,
+                  "y": 317,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_q1-lab-b-0",
@@ -481,7 +656,12 @@
                 "capienza": 10,
                 "proiettore": false,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 360,
+                  "y": 258,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_r1-b-0",
@@ -494,7 +674,12 @@
                 "capienza": 30,
                 "proiettore": false,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 386,
+                  "y": 259,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_s1-b-0",
@@ -507,7 +692,12 @@
                 "capienza": 25,
                 "proiettore": false,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 405,
+                  "y": 261,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_t1-b-0",
@@ -520,7 +710,12 @@
                 "capienza": 25,
                 "proiettore": false,
                 "rete": true,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 429,
+                  "y": 260,
+                  "zoom": 2
+                }
               }
             ],
             "2": []
@@ -542,9 +737,9 @@
                 "note": "",
                 "link-mappa": "https://di.unipi.it/mappa-dipartimento/",
                 "link-dipartimento": "https://di.unipi.it/"
-
               }
-            ]
+            ],
+            "-1": []
           }
         },
         "d": {
@@ -571,7 +766,12 @@
                 "type": "aula",
                 "note": "",
                 "rete": false,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 380,
+                  "y": 296,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_d3-d-0",
@@ -593,7 +793,12 @@
                 "type": "aula",
                 "note": "",
                 "rete": false,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 546,
+                  "y": 295,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_d4-d-0",
@@ -613,7 +818,12 @@
                 "type": "aula",
                 "note": "",
                 "rete": false,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 297,
+                  "y": 294,
+                  "zoom": 2
+                }
               },
               {
                 "id": "fib_d5-d-0",
@@ -635,7 +845,12 @@
                 "type": "aula",
                 "note": "",
                 "rete": false,
-                "accesso_disabili": true
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 463,
+                  "y": 295,
+                  "zoom": 2
+                }
               }
             ]
           }
