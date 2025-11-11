@@ -740,6 +740,90 @@
                 "note": "",
                 "link-mappa": "https://di.unipi.it/mappa-dipartimento/",
                 "link-dipartimento": "https://di.unipi.it/"
+              },
+              {
+                "id": "fib_sro-c-2",
+                "nome": "Sala riunioni OVEST",
+                "alias": [],
+                "type": "sala",
+                "note": "",
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 49,
+                  "y": 294,
+                  "zoom": 2
+                }
+              },
+              {
+                "id": "fib_sre-c-2",
+                "nome": "Sala riunioni EST",
+                "alias": [],
+                "type": "sala",
+                "note": "",
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 48,
+                  "y": 488,
+                  "zoom": 2
+                }
+              },
+              {
+                "id": "fib_sd-c-2",
+                "nome": "Sala DEMO",
+                "alias": [],
+                "type": "sala",
+                "note": "",
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 764,
+                  "y": 488,
+                  "zoom": 2
+                }
+              },
+              {
+                "id": "fib_sg-c-2",
+                "nome": "Sala GERACE",
+                "alias": [
+                  "Sala convegni GERANCE"
+                ],
+                "type": "sala",
+                "note": "",
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 601,
+                  "y": 395,
+                  "zoom": 2
+                }
+              },
+              {
+                "id": "fib_sse-c-2",
+                "nome": "Seminari EST",
+                "alias": [
+                  "Sala seminari EST"
+                ],
+                "type": "sala",
+                "note": "",
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 201,
+                  "y": 411,
+                  "zoom": 2
+                }
+              },
+              {
+                "id": "fib_sse-c-2",
+                "nome": "Seminari OVEST",
+                "alias": [
+                  "Sala seminari OVEST"
+                ],
+                "type": "sala",
+                "note": "",
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 206,
+                  "y": 371,
+                  "zoom": 2
+                }
               }
             ]
           }

@@ -298,5 +298,9 @@
   "room_detail_camera": {
     "original": "Telecamera fissa",
     "translation": "Telecamera fissa"
+  },
+  "room_detail_blackboard": {
+    "original": "Lavagna: %s",
+    "translation": "Lavagna: %s"
   }
 }

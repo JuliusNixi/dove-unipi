@@ -20,7 +20,7 @@
 
 - [Indice](#indice)
 - [Contributori](#contributori)
-- [Perchè?](#perchè)
+- [Perché?](#perché)
 - [Struttura del progetto](#struttura-del-progetto)
 - [rooms.json](#roomsjson)
 - [Flowchart](#flowchart)

@@ -1185,35 +1185,55 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                 document.title = t('app_title');
                 
                 // Update meta tags
-                document.querySelector('meta[name="description"]').content = t('meta_description');
-                document.querySelector('meta[property="og:title"]').content = t('meta_og_title');
-                document.querySelector('meta[property="og:description"]').content = t('meta_og_description');
-                document.querySelector('meta[name="twitter:title"]').content = t('meta_og_title');
-                document.querySelector('meta[name="twitter:description"]').content = t('meta_og_description');
+                const metaDescription = document.querySelector('meta[name="description"]');
+                if (metaDescription) metaDescription.content = t('meta_description');
+                
+                const metaOgTitle = document.querySelector('meta[property="og:title"]');
+                if (metaOgTitle) metaOgTitle.content = t('meta_og_title');
+                
+                const metaOgDescription = document.querySelector('meta[property="og:description"]');
+                if (metaOgDescription) metaOgDescription.content = t('meta_og_description');
+                
+                const metaTwitterTitle = document.querySelector('meta[name="twitter:title"]');
+                if (metaTwitterTitle) metaTwitterTitle.content = t('meta_og_title');
+                
+                const metaTwitterDescription = document.querySelector('meta[name="twitter:description"]');
+                if (metaTwitterDescription) metaTwitterDescription.content = t('meta_og_description');
                 
                 // Update HTML lang attribute
                 document.documentElement.lang = currentLanguage;
                 
-                // Update search placeholders
-                searchInput.placeholder = t('search_placeholder');
-                searchInputMobile.placeholder = t('search_placeholder');
+                // Update search placeholders (con controllo se esistono)
+                if (searchInput) searchInput.placeholder = t('search_placeholder');
+                if (searchInputMobile) searchInputMobile.placeholder = t('search_placeholder');
                 
-                // Update tooltips
-                openSidebarBtn.setAttribute('data-tooltip', t('sidebar_open'));
-                closeSidebarBtn.setAttribute('data-tooltip', t('sidebar_close'));
-                shareBtn.setAttribute('data-tooltip', t('share_button'));
-                perspectiveViewBtn.setAttribute('data-tooltip', t('view_perspective'));
-                topViewBtn.setAttribute('data-tooltip', t('view_perspective'));
-                perspectiveViewBtn.setAttribute('aria-label', t('view_perspective'));
-                topViewBtn.setAttribute('data-tooltip', t('view_top'));
-                topViewBtn.setAttribute('aria-label', t('view_top'));
-                shareBtn.setAttribute('aria-label', t('share_aria_label'));
-                zoomInBtn.setAttribute('data-tooltip', t('zoom_in'));
-                zoomInBtn.setAttribute('aria-label', t('zoom_in'));
-                zoomOutBtn.setAttribute('data-tooltip', t('zoom_out'));
-                zoomOutBtn.setAttribute('aria-label', t('zoom_out'));
-                resetZoomBtn.setAttribute('data-tooltip', t('zoom_reset'));
-                resetZoomBtn.setAttribute('aria-label', t('zoom_reset'));
+                // Update tooltips (con controllo se esistono)
+                if (openSidebarBtn) openSidebarBtn.setAttribute('data-tooltip', t('sidebar_open'));
+                if (closeSidebarBtn) closeSidebarBtn.setAttribute('data-tooltip', t('sidebar_close'));
+                if (shareBtn) {
+                    shareBtn.setAttribute('data-tooltip', t('share_button'));
+                    shareBtn.setAttribute('aria-label', t('share_aria_label'));
+                }
+                if (perspectiveViewBtn) {
+                    perspectiveViewBtn.setAttribute('data-tooltip', t('view_perspective'));
+                    perspectiveViewBtn.setAttribute('aria-label', t('view_perspective'));
+                }
+                if (topViewBtn) {
+                    topViewBtn.setAttribute('data-tooltip', t('view_top'));
+                    topViewBtn.setAttribute('aria-label', t('view_top'));
+                }
+                if (zoomInBtn) {
+                    zoomInBtn.setAttribute('data-tooltip', t('zoom_in'));
+                    zoomInBtn.setAttribute('aria-label', t('zoom_in'));
+                }
+                if (zoomOutBtn) {
+                    zoomOutBtn.setAttribute('data-tooltip', t('zoom_out'));
+                    zoomOutBtn.setAttribute('aria-label', t('zoom_out'));
+                }
+                if (resetZoomBtn) {
+                    resetZoomBtn.setAttribute('data-tooltip', t('zoom_reset'));
+                    resetZoomBtn.setAttribute('aria-label', t('zoom_reset'));
+                }
                 
                 // Update sidebar title
                 const sidebarTitle = document.querySelector('#sidebar .text-2xl');
@@ -1263,8 +1283,12 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                 searchSuggestions[4] = t('search_suggestion_department');
                 searchSuggestions[5] = t('search_suggestion_share');
                 
+                // Riavvia il ciclo dei suggerimenti con le nuove traduzioni
+                currentSuggestionIndex = 0;
+                startSearchPlaceholderCycle();
+                
                 // Refresh current search results if visible
-                const currentQuery = isMobile() ? searchInputMobile.value : searchInput.value;
+                const currentQuery = isMobile() ? (searchInputMobile ? searchInputMobile.value : '') : (searchInput ? searchInput.value : '');
                 if (currentQuery) {
                     searchRooms(currentQuery);
                 }
@@ -1276,12 +1300,39 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
             // Apply initial dyslexic font setting
             setDyslexicFontSetting(settingsConfig.dyslexicFont);
 
-            // Load translations and apply them
-            loadTranslations(currentLanguage).then(success => {
-                if (success) {
-                    applyTranslations();
+            // Load translations and apply them with retry mechanism for mobile
+            let translationsLoaded = false;
+            
+            async function ensureTranslationsLoaded() {
+                if (!translationsLoaded) {
+                    const success = await loadTranslations(currentLanguage);
+                    if (success) {
+                        translationsLoaded = true;
+                        applyTranslations();
+                        return true;
+                    }
+                    return false;
+                }
+                return true;
+            }
+            
+            // Initial load
+            ensureTranslationsLoaded().then(success => {
+                if (!success) {
+                    // Retry after a short delay if initial load failed (network issues on mobile)
+                    console.warn('Initial translation load failed, retrying...');
+                    setTimeout(() => ensureTranslationsLoaded(), 1000);
                 }
             });
+            
+            // Reapply translations when DOM is fully ready (helps with mobile)
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => {
+                    if (translationsLoaded) {
+                        applyTranslations();
+                    }
+                });
+            }
 
             // Apply initial text size setting
             if (storedTextSize && ['text-small', 'text-normal', 'text-large', 'text-xlarge'].includes(storedTextSize)) {
@@ -1330,7 +1381,7 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
             const MAX_CACHE_SIZE = 10; // Massimo numero di SVG in cache
             const cacheAccessOrder = []; // Per gestire LRU (Least Recently Used)
 
-            // Suggerimenti per la ricerca
+            // Suggerimenti per la ricerca (verranno aggiornati dopo il caricamento delle traduzioni)
             let searchSuggestions = [
                 "Cerca un'aula...",
                 "Prova: Impostazioni",
@@ -1340,17 +1391,23 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                 "Prova: Condividi"
             ];
             let currentSuggestionIndex = 0;
+            let searchPlaceholderInterval = null;
 
             // Funzione per aggiornare il placeholder
             function updateSearchPlaceholder() {
                 currentSuggestionIndex = (currentSuggestionIndex + 1) % searchSuggestions.length;
                 const newPlaceholder = searchSuggestions[currentSuggestionIndex];
-                searchInput.placeholder = newPlaceholder;
-                searchInputMobile.placeholder = newPlaceholder;
+                if (searchInput) searchInput.placeholder = newPlaceholder;
+                if (searchInputMobile) searchInputMobile.placeholder = newPlaceholder;
             }
 
-            // Cambia il suggerimento ogni 5 secondi
-            setInterval(updateSearchPlaceholder, 5000);
+            // Funzione per avviare il ciclo dei suggerimenti
+            function startSearchPlaceholderCycle() {
+                if (searchPlaceholderInterval) {
+                    clearInterval(searchPlaceholderInterval);
+                }
+                searchPlaceholderInterval = setInterval(updateSearchPlaceholder, 5000);
+            }
 
             // Nuova funzione per centrare la mappa su un'aula senza ricaricare
             function centerMapOnRoom(room) {
@@ -1412,11 +1469,15 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                 );
                 
                 if (isSameLocation) {
-                    // Siamo già sul piano giusto, centra solo la mappa
-                    centerMapOnRoom(room);
+                    // Siamo già sul piano giusto, forza vista top e centra la mappa
+                    if (currentView !== 'top') {
+                        selectView('top', true, null, room);
+                    } else {
+                        centerMapOnRoom(room);
+                    }
                 } else {
-                    // Cambio di piano necessario, ricarica la mappa con le coordinate dell'aula
-                    selectPolo(polo, edificio, piano, null, null, room);
+                    // Cambio di piano necessario, ricarica la mappa in vista top con le coordinate dell'aula
+                    selectPolo(polo, edificio, piano, null, 'top', room);
                 }
             }
 
@@ -1805,7 +1866,7 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                 updateTextSize();
 
                 // Store reference for syncing
-                wrapper.updateTextSize = updateTextSize;
+                controlsContainer.updateTextSize = updateTextSize;
 
                 return wrapper;
             }
@@ -1932,7 +1993,13 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                 if (success) {
                     settingsConfig.language = lang;
                     localStorage.setItem('selectedLanguage', lang);
+                    translationsLoaded = true;
+                    
+                    // Apply translations multiple times to ensure they stick on mobile
                     applyTranslations();
+                    
+                    // Retry after a short delay to catch any late-loading elements
+                    setTimeout(() => applyTranslations(), 100);
                     
                     // Refresh the current view to update all text
                     if (selectedPolo && selectedBuilding && selectedFloor) {
@@ -1944,7 +2011,7 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                     // Refresh search results if visible
                     const currentSearchResults = isMobile() ? searchResultsMobile : searchResults;
                     const currentSearchInput = isMobile() ? searchInputMobile : searchInput;
-                    if (!currentSearchResults.classList.contains('hidden')) {
+                    if (currentSearchResults && !currentSearchResults.classList.contains('hidden') && currentSearchInput) {
                         searchRooms(currentSearchInput.value);
                     }
                 }
@@ -1953,8 +2020,13 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
             function syncTextSizeControls() {
                 // Update all text size control displays
                 document.querySelectorAll('.text-size-controls').forEach(controls => {
+                    if (typeof controls.updateTextSize === 'function') {
+                        controls.updateTextSize();
+                        return;
+                    }
+
                     const wrapper = controls.closest('.search-result-item');
-                    if (wrapper && wrapper.updateTextSize) {
+                    if (wrapper && typeof wrapper.updateTextSize === 'function') {
                         wrapper.updateTextSize();
                     }
                 });
@@ -2035,7 +2107,22 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
 
             // Aggiungi listener per le scorciatoie da tastiera
             document.addEventListener('keydown', (e) => {
-                // Non attivare le scorciatoie se si sta scrivendo in un campo di input
+                // Scorciatoie con modificatori (Ctrl+Alt+J, Ctrl+Alt+K)
+                if ((e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') && e.ctrlKey && e.altKey) {
+                    // Permetti le scorciatoie anche se si è in un input
+                    switch (e.key.toLowerCase()) {
+                        case 'j':
+                            e.preventDefault();
+                            shareBtn.click();
+                            return;
+                        case 'k':
+                            e.preventDefault();
+                            resetZoomBtn.click();
+                            return;
+                    }
+                }
+                
+                // Non attivare altre funzionalità se si sta scrivendo in un campo di input
                 if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
                     return;
                 }
@@ -2051,6 +2138,41 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                             e.preventDefault();
                             resetZoomBtn.click();
                             break;
+                    }
+                    return;
+                }
+                
+                // Nuova funzionalità: apri ricerca quando si inizia a digitare
+                // Ignora tasti speciali, modificatori, frecce, etc.
+                const ignoredKeys = [
+                    'Control', 'Shift', 'Alt', 'Meta', 'Escape', 'Tab', 
+                    'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
+                    'Enter', 'Backspace', 'Delete', 'CapsLock', 'Home', 'End',
+                    'PageUp', 'PageDown', 'Insert', 'NumLock', 'ScrollLock', 'Pause',
+                    'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12'
+                ];
+                
+                if (ignoredKeys.includes(e.key)) {
+                    return;
+                }
+                
+                // Ignora combinazioni con tasti modificatori (eccetto Shift per maiuscole)
+                if (e.ctrlKey || e.metaKey || e.altKey) {
+                    return;
+                }
+                
+                // Se è un carattere alfanumerico o simbolo stampabile
+                if (e.key.length === 1) {
+                    e.preventDefault();
+                    
+                    // Focus sull'input appropriato (desktop o mobile)
+                    const targetInput = isMobile() ? searchInputMobile : searchInput;
+                    if (targetInput) {
+                        targetInput.focus();
+                        // Aggiungi il carattere digitato
+                        targetInput.value = e.key;
+                        // Trigger search
+                        searchRooms(e.key);
                     }
                 }
             });
@@ -2366,15 +2488,27 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                     roomsListParent.insertBefore(deptContainer, roomsTitleElement);
                     roomsListParent.insertBefore(deptHeader, deptContainer);
                     
-                    // Il titolo "Aule" rimane visibile
+                    // Determina il titolo in base al tipo predominante di stanze
+                    const hasSale = regularRooms.some(room => room.type === 'sala');
                     if (roomsTitleElement) {
-                        roomsTitleElement.style.display = '';
+                        if (regularRooms.length > 0) {
+                            roomsTitleElement.textContent = hasSale ? (currentLanguage === 'it' ? 'Sale' : 'Rooms') : t('rooms_title');
+                            roomsTitleElement.style.display = '';
+                        } else {
+                            roomsTitleElement.style.display = 'none';
+                        }
                         roomsTitleElement.style.marginTop = ''; // Nessun margine extra necessario
                     }
                 } else {
-                    // Mostra il titolo statico senza margine extra
+                    // Determina il titolo in base al tipo predominante di stanze
+                    const hasSale = regularRooms.some(room => room.type === 'sala');
                     if (roomsTitleElement) {
-                        roomsTitleElement.style.display = '';
+                        if (regularRooms.length > 0) {
+                            roomsTitleElement.textContent = hasSale ? (currentLanguage === 'it' ? 'Sale' : 'Rooms') : t('rooms_title');
+                            roomsTitleElement.style.display = '';
+                        } else {
+                            roomsTitleElement.style.display = 'none';
+                        }
                         roomsTitleElement.style.marginTop = '';
                     }
                 }
@@ -2383,48 +2517,47 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                 roomsList.innerHTML = '';
 
                 // List regular rooms
-                if (regularRooms.length > 0) {
-                    regularRooms.forEach(room => {
-                        const roomContainer = document.createElement('div');
-                        roomContainer.className = 'nav-item-container';
+                regularRooms.forEach(room => {
+                    const roomContainer = document.createElement('div');
+                    roomContainer.className = 'nav-item-container';
 
-                        const roomElement = document.createElement('a');
-                        roomElement.href = '#';
-                        roomElement.className = 'nav-item w-full text-left flex items-center justify-between space-x-3 p-2 pl-8 rounded-lg';
-                        roomElement.innerHTML = `
-                            <span class="flex items-center space-x-3">
-                                <span class="material-symbols-outlined" style="font-size: 18px; line-height: 1;">
-                                door_front
-                                </span>
-                                <span>${room.nome}</span>
+                    const roomElement = document.createElement('a');
+                    roomElement.href = '#';
+                    roomElement.className = 'nav-item w-full text-left flex items-center justify-between space-x-3 p-2 pl-8 rounded-lg';
+                    roomElement.innerHTML = `
+                        <span class="flex items-center space-x-3">
+                            <span class="material-symbols-outlined" style="font-size: 18px; line-height: 1;">
+                            door_front
                             </span>
-                            <span class="material-symbols-outlined expand-icon" style="font-size: 20px; line-height: 1; transition: transform 0.2s;">
-                                expand_more
-                            </span>
+                            <span>${room.nome}</span>
+                        </span>
+                        <span class="material-symbols-outlined expand-icon" style="font-size: 20px; line-height: 1; transition: transform 0.2s;">
+                            expand_more
+                        </span>
+                    `;
+
+                    const roomInfoElement = document.createElement('div');
+                    function addInfoRow(condition, icon, text) {
+                        if (!condition) return false;
+                        roomInfoElement.innerHTML += `
+                            <div class="flex items-center space-x-2">
+                                <span class="material-symbols-outlined" style="font-size: 16px; line-height: 1;">${icon}</span>
+                                <span>${text.replace("%s", `${condition}`)}</span>
+                            </div>
                         `;
+                        return true;
+                    }
+                    roomInfoElement.className = 'capacity-info hidden pl-14 p-1 text-sm text-gray-600';
 
-                        const roomInfoElement = document.createElement('div');
-                        function addInfoRow(condition, icon, text) {
-                            if (!condition) return false;
-                            roomInfoElement.innerHTML += `
-                                <div class="flex items-center space-x-2">
-                                    <span class="material-symbols-outlined" style="font-size: 16px; line-height: 1;">${icon}</span>
-                                    <span>${text.replace("%s", `${condition}`)}</span>
-                                </div>
-                            `;
-                            return true;
-                        }
-                        roomInfoElement.className = 'capacity-info hidden pl-14 p-1 text-sm text-gray-600';
+                    // Accessibility
+                    addInfoRow(room.capienza, "group", t('room_detail_capacity'));
+                    addInfoRow(room.accesso_disabili, "accessible_forward", t('room_detail_accessible'));
+                    addInfoRow(!room.accesso_disabili, "not_accessible_forward", t('room_detail_not_accessible'));
 
-                        // Accessibility
-                        addInfoRow(room.capienza, "group", t('room_detail_capacity'));
-                        addInfoRow(room.accesso_disabili, "accessible_forward", t('room_detail_accessible'));
-                        addInfoRow(!room.accesso_disabili, "not_accessible_forward", t('room_detail_not_accessible'));
-
-                        // For the student
-                        addInfoRow(room.rete, "wifi", t('room_detail_network'));
-                        addInfoRow(room.porte_rete, "lan", t('room_detail_network_ports'));
-                        addInfoRow(room.prese_elettriche, "bolt", t('room_detail_power_outlets'));
+                    // For the student
+                    addInfoRow(room.rete, "wifi", t('room_detail_network'));
+                    addInfoRow(room.porte_rete, "lan", t('room_detail_network_ports'));
+                    addInfoRow(room.prese_elettriche, "bolt", t('room_detail_power_outlets'));
 
                         // Both - functionality / lab
                         if (!addInfoRow(room.numero_pc, "computer", t('room_detail_computers_count')))
@@ -2436,28 +2569,22 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                         addInfoRow(room.telecamera, "speed_camera", t('room_detail_camera'));
                         addInfoRow(room.lavagna, "draw", "Lavagna: %s")
 
-                        roomElement.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            
-                            // Centra la mappa sull'aula usando la funzione centralizzata
-                            centerMapOnRoom(room);
-                            
-                            // Toggle delle informazioni dell'aula
-                            roomInfoElement.classList.toggle('hidden');
-                            const expandIcon = roomElement.querySelector('.expand-icon');
-                            expandIcon.style.transform = roomInfoElement.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
-                        });
-
-                        roomContainer.appendChild(roomElement);
-                        roomContainer.appendChild(roomInfoElement);
-                        roomsList.appendChild(roomContainer);
+                    roomElement.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        
+                        // Centra la mappa sull'aula usando la funzione centralizzata
+                        centerMapOnRoom(room);
+                        
+                        // Toggle delle informazioni dell'aula
+                        roomInfoElement.classList.toggle('hidden');
+                        const expandIcon = roomElement.querySelector('.expand-icon');
+                        expandIcon.style.transform = roomInfoElement.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
                     });
-                } else {
-                    const noRoomsMsg = document.createElement('p');
-                    noRoomsMsg.className = 'p-2 pl-8 text-sm text-gray-500';
-                    noRoomsMsg.textContent = t('no_rooms_found');
-                    roomsList.appendChild(noRoomsMsg);
-                }
+
+                    roomContainer.appendChild(roomElement);
+                    roomContainer.appendChild(roomInfoElement);
+                    roomsList.appendChild(roomContainer);
+                });
             }
 
             function selectBuilding(building, floorToSelect = null, viewParams = null, viewToSelect = null, roomData = null) {
@@ -2816,6 +2943,20 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
             setTimeout(() => {
                 document.body.classList.remove('no-transition');
             }, 50);
+            
+            // Reapply translations when page becomes visible again (useful on mobile when switching apps)
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && translationsLoaded) {
+                    applyTranslations();
+                }
+            });
+            
+            // Reapply translations on page focus (additional safety for mobile)
+            window.addEventListener('focus', () => {
+                if (translationsLoaded) {
+                    applyTranslations();
+                }
+            });
         });
     </script>
 
