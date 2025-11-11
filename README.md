@@ -43,11 +43,12 @@
 [<img src="https://wsrv.nl/?url=github.com/plumkewe.png?w=64&h=64&mask=circle&fit=cover" width="46" height="46" alt="Lyubomyr Malay" />](https://github.com/plumkewe)
 [<img src="https://wsrv.nl/?url=github.com/piorpiedev.png?w=64&h=64&mask=circle&fit=cover" width="46" height="46" alt="piorpiedev" />](https://github.com/piorpiedev)
 [<img src="https://wsrv.nl/?url=github.com/L-myself.png?w=64&h=64&mask=circle&fit=cover" width="46" height="46" alt="piorpiedev" />](https://github.com/L-myself)
+[<img src="https://wsrv.nl/?url=github.com/gregoriop06.png?w=64&h=64&mask=circle&fit=cover" width="46" height="46" alt="Gregorio Pescucci" />](https://github.com/gregoriop06)
 
 *Un ringraziamento speciale a chi ha dedicato il proprio tempo per la raccolta dati nelle aule.*
 
 
-## Perchè?
+## Perché?
 
 <p align="right">(<a href="#indice">indice</a>)</p>
 
@@ -71,7 +72,7 @@ A dimostrazione di ciò, ecco alcuni messaggi reali presi da un gruppo Telegram:
 ...e tanti altri. Da qui l'ispirazione per il nome del progetto: **DOVE?**
 
 > [!NOTE]
-> Il proggetto è in sviluppo, contribuisci!
+> Il progetto è in sviluppo, contribuisci!
 
 
 ## Struttura del progetto
@@ -82,7 +83,9 @@ A dimostrazione di ciò, ecco alcuni messaggi reali presi da un gruppo Telegram:
 ```graphql
 ├── README.md
 ├── assets/
+│   ├── fonts/  
 │   ├── logo/
+│   │   ├── favicon.png
 │   │   └── logo.svg
 │   └── screenshots/
 ├── data/
@@ -317,7 +320,7 @@ Al momento sono disponibili le seguenti scorciatoie:
       <td><kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>J</kbd></td>
     </tr>
     <tr>
-      <td>Centralizza la visuale</td>
+      <td>Centra la visuale</td>
       <td><kbd>⌃</kbd> + <kbd>⌥</kbd> + <kbd>K</kbd></td>
       <td><kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>K</kbd></td>
     </tr>
@@ -358,11 +361,11 @@ Vuoi contribuire? Apri una issue oppure inviami un’email a: lyubomyr.malay@icl
 
 ### Funzionalità che vorrei aggiungere
 
-- [ ] **Occupazione aule:** Collegare in qualche modo University Planner da poter vedere le prenotazioni direttamente sul sito
+- [ ] **Occupazione aule:** Collegare in qualche modo University Planner per poter vedere le prenotazioni direttamente sul sito.
 
 ## Problemi noti
 
 <p align="right">(<a href="#indice">indice</a>)</p>
 
-- [ ] **Visibilità bottone su Safari iOS:** Il bottnoe di GitHub nella sidebar non è visibile su Safari per iOS 26
+- [ ] **Visibilità bottone su Safari iOS:** Il bottone di GitHub nella sidebar non è visibile su Safari per iOS 26.
 - [ ] **Mappe non aggiornate:** I nomi di alcune aule sulle planimetrie SVG/DWG non corrispondono a quelli reali.

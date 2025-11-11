@@ -251,12 +251,15 @@
                 "id": "fib_i-lab-b-0",
                 "nome": "Aula I-Lab",
                 "alias": [
-                  "I-Lab"
+                  "I-Lab",
+                  "Ilab",
+                  "labI"
                 ],
                 "type": "laboratorio",
                 "note": "",
                 "capienza": 30,
                 "proiettore": true,
+                "lavagna": "nera",
                 "rete": true,
                 "accesso_disabili": true,
                 "coordinates": {
@@ -729,7 +732,7 @@
             "2": [
               {
                 "id": "fib_di-c-2",
-                "nome": "Dipartimaento di Informatica",
+                "nome": "Dipartimento di Informatica",
                 "alias": [
                   "DI"
                 ],
@@ -738,8 +741,7 @@
                 "link-mappa": "https://di.unipi.it/mappa-dipartimento/",
                 "link-dipartimento": "https://di.unipi.it/"
               }
-            ],
-            "-1": []
+            ]
           }
         },
         "d": {
