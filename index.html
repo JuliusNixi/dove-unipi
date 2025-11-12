@@ -113,7 +113,6 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
             -ms-user-select: none; /* IE 10+ */
             user-select: none; /* Standard syntax */
             font-size: 16px; /* Base font size */
-            transition: font-size 0.2s ease-in-out;
         }
         /* Classe per il font OpenDyslexic */
         body.dyslexic-font,
@@ -179,6 +178,9 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
             cursor: pointer;
             border-top: 1px solid rgba(209, 213, 219, 0.7); /* gray-300 70% */
             transition: background-color 0.2s ease-in-out;
+            overflow: hidden; /* Previene lo scroll orizzontale */
+            width: 100%; /* Forza la larghezza al 100% del contenitore */
+            box-sizing: border-box; /* Include padding nel calcolo della larghezza */
         }
         .search-result-item:hover {
             background-color: rgba(0, 0, 0, 0.1); /* 10% black opacity */
@@ -186,10 +188,18 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
         .search-result-item .title {
             color: #1F2937; /* gray-800 */
             font-weight: 600;
+            overflow: hidden; /* Previene overflow */
+            text-overflow: ellipsis; /* Aggiunge ... se il testo è troppo lungo */
+            white-space: nowrap; /* Mantiene il testo su una riga */
+            width: 100%; /* Forza la larghezza */
         }
         .search-result-item .details {
             color: #4B5563; /* gray-600 */
             font-size: 12px;
+            overflow: hidden; /* Previene overflow */
+            word-wrap: break-word; /* Permette di spezzare le parole lunghe */
+            word-break: break-word; /* Compatibilità aggiuntiva */
+            width: 100%; /* Forza la larghezza */
         }
         .search-result-item:hover .title,
         .search-result-item:hover .details {
@@ -360,6 +370,8 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
         #search-results {
             max-height: 240px;
             overflow-y: auto;
+            overflow-x: hidden; /* Previene lo scroll orizzontale */
+            width: 100%; /* Forza la larghezza al 100% */
         }
         #right-controls {
             grid-area: controls;
@@ -405,6 +417,7 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                 padding-right: 1rem;
                 display: flex;
                 justify-content: center;
+                transition: bottom 0.3s ease-in-out;
             }
 
             #mobile-search-container .search-wrapper-mobile {
@@ -430,6 +443,10 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                 border-top-left-radius: 0.5rem;
                 border-top-right-radius: 0.5rem;
                 overflow: hidden;
+                max-height: 240px;
+                overflow-y: auto;
+                overflow-x: hidden; /* Previene lo scroll orizzontale */
+                width: 100%; /* Forza la larghezza al 100% */
             }
 
             #mobile-search-container .search-wrapper-mobile > .relative {
@@ -490,6 +507,7 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                 --tw-ring-color: #9CA3AF; /* ring-gray-400 */
                 transition: border-radius 0.3s ease-in-out;
                 overflow: hidden;
+                overflow-x: hidden; /* Previene lo scroll orizzontale sul wrapper */
             }
             
             /* Footer posizionato sotto la ricerca mobile */
@@ -1003,6 +1021,61 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Gestione tastiera mobile per la barra di ricerca
+            const mobileSearchContainer = document.getElementById('mobile-search-container');
+            const searchInputMobileElement = document.getElementById('search-input-mobile');
+            
+            // Funzione per gestire il ridimensionamento della viewport (quando si apre la tastiera)
+            function handleViewportResize() {
+                if (!mobileSearchContainer || !window.visualViewport) return;
+                
+                // Calcola lo spostamento necessario
+                const viewportHeight = window.visualViewport.height;
+                const windowHeight = window.innerHeight;
+                const keyboardHeight = windowHeight - viewportHeight;
+                
+                // Se la tastiera è aperta (differenza > 100px per evitare falsi positivi)
+                if (keyboardHeight > 100) {
+                    // Sposta la barra di ricerca sopra la tastiera
+                    // Aggiungi un offset extra di 16px per un po' di padding
+                    mobileSearchContainer.style.bottom = `${keyboardHeight + 16}px`;
+                } else {
+                    // Ripristina la posizione originale
+                    mobileSearchContainer.style.bottom = '48px';
+                }
+            }
+            
+            // Listener per il ridimensionamento della viewport (iOS e Android moderni)
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener('resize', handleViewportResize);
+                window.visualViewport.addEventListener('scroll', handleViewportResize);
+            }
+            
+            // Fallback per dispositivi che non supportano visualViewport
+            // Monitora il focus sull'input di ricerca mobile
+            if (searchInputMobileElement) {
+                searchInputMobileElement.addEventListener('focus', () => {
+                    // Usa un timeout per dare tempo alla tastiera di aprirsi
+                    setTimeout(() => {
+                        if (window.visualViewport) {
+                            handleViewportResize();
+                        } else {
+                            // Fallback: scroll per mantenere l'input visibile
+                            searchInputMobileElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }, 300);
+                });
+                
+                searchInputMobileElement.addEventListener('blur', () => {
+                    // Quando l'input perde il focus, ripristina la posizione
+                    setTimeout(() => {
+                        if (mobileSearchContainer) {
+                            mobileSearchContainer.style.bottom = '48px';
+                        }
+                    }, 100);
+                });
+            }
+            
             const preventNativeZoomGestures = () => {
                 let lastTouchEnd = 0;
 
@@ -2339,14 +2412,30 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                 return window.innerWidth <= 880;
             }
 
-            // Carica i dati e popola la sidebar
-            fetch('data/rooms.json')
-                .then(response => response.json())
-                .then(jsonData => {
-                    data = jsonData;
-                    populatePolos(Object.keys(data.polo));
-                    handleInitialLoad(); // Gestisce il caricamento dall'URL
-                });
+            // Carica le traduzioni prima, poi i dati delle stanze
+            let dataLoaded = false;
+            
+            async function loadDataAndInitialize() {
+                // Aspetta che le traduzioni siano caricate
+                await ensureTranslationsLoaded();
+                
+                // Poi carica i dati delle stanze
+                if (!dataLoaded) {
+                    try {
+                        const response = await fetch('data/rooms.json');
+                        const jsonData = await response.json();
+                        data = jsonData;
+                        dataLoaded = true;
+                        populatePolos(Object.keys(data.polo));
+                        handleInitialLoad(); // Ora le traduzioni sono sicuramente caricate
+                    } catch (error) {
+                        console.error('Failed to load rooms data:', error);
+                    }
+                }
+            }
+            
+            // Avvia il caricamento
+            loadDataAndInitialize();
 
             function populatePolos(polos) {
                 polosList.innerHTML = '';
@@ -2567,7 +2656,7 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                         addInfoRow(room.proiettore, "cast", t('room_detail_projector'));
                         addInfoRow(room.altoparlanti, "speaker_group", t('room_detail_speakers'));
                         addInfoRow(room.telecamera, "speed_camera", t('room_detail_camera'));
-                        addInfoRow(room.lavagna, "draw", "Lavagna: %s")
+                        addInfoRow(room.lavagna, "draw", t('room_detail_blackboard'))
 
                     roomElement.addEventListener('click', (e) => {
                         e.preventDefault();

@@ -49,6 +49,198 @@
                 }
               },
               {
+                "id": "fib_lab1-b-0",
+                "nome": "Laboratorio 1",
+                "alias": [
+                  "Lab 1",
+                  "Laboratorio1"
+                ],
+                "type": "laboratorio",
+                "note": "",
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 585,
+                  "y": 361,
+                  "zoom": 2
+                }
+              },
+              {
+                "id": "fib_lab2-b-0",
+                "nome": "Laboratorio 2",
+                "alias": [
+                  "Lab 2",
+                  "Laboratorio2"
+                ],
+                "type": "laboratorio",
+                "note": "",
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 626,
+                  "y": 362,
+                  "zoom": 2
+                }
+              },
+              {
+                "id": "fib_lab3-b-0",
+                "nome": "Laboratorio 3",
+                "alias": [
+                  "Lab 3",
+                  "Laboratorio3"
+                ],
+                "type": "laboratorio",
+                "note": "",
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 666,
+                  "y": 363,
+                  "zoom": 2
+                }
+              },
+              {
+                "id": "fib_lab4-b-0",
+                "nome": "Laboratorio 4",
+                "alias": [
+                  "Lab 4",
+                  "Laboratorio4"
+                ],
+                "type": "laboratorio",
+                "note": "",
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 708,
+                  "y": 369,
+                  "zoom": 2
+                }
+              },
+              {
+                "id": "fib_lab5-b-0",
+                "nome": "Laboratorio 5",
+                "alias": [
+                  "Lab 5",
+                  "Laboratorio5"
+                ],
+                "type": "laboratorio",
+                "note": "",
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 584,
+                  "y": 237,
+                  "zoom": 2
+                }
+              },
+              {
+                "id": "fib_lab6-b-0",
+                "nome": "Laboratorio 6",
+                "alias": [
+                  "Lab 6",
+                  "Laboratorio6"
+                ],
+                "type": "laboratorio",
+                "note": "",
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 625,
+                  "y": 225,
+                  "zoom": 2
+                }
+              },
+              {
+                "id": "fib_lab7-b-0",
+                "nome": "Laboratorio 7",
+                "alias": [
+                  "Lab 7",
+                  "Laboratorio7"
+                ],
+                "type": "laboratorio",
+                "note": "",
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 668,
+                  "y": 232,
+                  "zoom": 2
+                }
+              },
+              {
+                "id": "fib_lab8-b-0",
+                "nome": "Laboratorio 8",
+                "alias": [
+                  "Lab 8",
+                  "Laboratorio8"
+                ],
+                "type": "laboratorio",
+                "note": "",
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 709,
+                  "y": 232,
+                  "zoom": 2
+                }
+              },
+              {
+                "id": "fib_lab9-b-0",
+                "nome": "Laboratorio 9",
+                "alias": [
+                  "Lab 9",
+                  "Laboratorio9"
+                ],
+                "type": "laboratorio",
+                "note": "",
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 465,
+                  "y": 350,
+                  "zoom": 2
+                }
+              },
+              {
+                "id": "fib_lab10-b-0",
+                "nome": "Laboratorio 10",
+                "alias": [
+                  "Lab 10",
+                  "Laboratorio10"
+                ],
+                "type": "laboratorio",
+                "note": "",
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 512,
+                  "y": 362,
+                  "zoom": 2
+                }
+              },
+              {
+                "id": "fib_lab11-b-0",
+                "nome": "Laboratorio 11",
+                "alias": [
+                  "Lab 11",
+                  "Laboratorio11"
+                ],
+                "type": "laboratorio",
+                "note": "",
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 462,
+                  "y": 231,
+                  "zoom": 2
+                }
+              },
+              {
+                "id": "fib_lab12-b-0",
+                "nome": "Laboratorio 12",
+                "alias": [
+                  "Lab 12",
+                  "Laboratorio12"
+                ],
+                "type": "laboratorio",
+                "note": "",
+                "accesso_disabili": true,
+                "coordinates": {
+                  "x": 506,
+                  "y": 241,
+                  "zoom": 2
+                }
+              },
+              {
                 "id": "fib_x3-b-0",
                 "nome": "Aula X3",
                 "alias": [

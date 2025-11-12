@@ -216,54 +216,79 @@ graph LR
 
 ```mermaid
 graph TB
-    Start[Utente apre l'app] --> LoadData[Carica rooms.json]
-    LoadData --> ParseURL{URL contiene<br/>parametri?}
+    Start[Utente apre l'app] --> DetectLang[Rileva lingua<br/>browser o preferenze salvate]
+    DetectLang --> LoadTranslations[Carica traduzioni<br/>IT/EN]
+    LoadTranslations --> LoadData[Carica dati<br/>edifici e aule]
     
-    ParseURL -->|Sì| URLParams[Estrai p, b, f, v<br/>dall'URL]
-    ParseURL -->|No| DefaultView[Seleziona valori<br/>di default]
+    LoadData --> CheckURL{Link con<br/>parametri?}
+    CheckURL -->|Sì| UseURL[Apri polo, edificio,<br/>piano e posizione<br/>dal link]
+    CheckURL -->|No| UseDefault[Apri primo polo<br/>disponibile]
     
-    URLParams --> SelectPolo[Seleziona Polo]
-    DefaultView --> SelectPolo
+    UseURL --> ShowMap[Mostra mappa<br/>interattiva]
+    UseDefault --> ShowMap
     
-    SelectPolo --> BuildUI[Costruisci UI Dinamica]
-    BuildUI --> Sidebar[Popola Sidebar:<br/>Edifici, Piani, Aule]
-    BuildUI --> Map[Carica Mappa Leaflet]
+    ShowMap --> BuildSidebar[Costruisci menu<br/>laterale con edifici,<br/>piani e aule]
+    BuildSidebar --> Ready[App pronta<br/>per l'uso]
     
-    Map --> LoadSVG[Carica file SVG<br/>del piano selezionato]
-    LoadSVG --> DisplayMap[Visualizza mappa<br/>interattiva]
+    Ready --> UserAction{Cosa fa<br/>l'utente?}
     
-    DisplayMap --> UserActions{Azione Utente}
+    %% Ricerca aula
+    UserAction -->|Cerca aula| SearchBar[Digita nella<br/>barra di ricerca]
+    SearchBar --> SearchType{Tipo di<br/>ricerca?}
+    SearchType -->|Nome/Alias| FindByName[Trova aula<br/>per nome]
+    SearchType -->|Capienza es: >200| FindByCapacity[Trova aule per<br/>capienza]
+    SearchType -->|Impostazioni| OpenSettings[Apri pannello<br/>impostazioni]
+    SearchType -->|Condividi| OpenShare[Mostra opzioni<br/>condivisione]
     
-    UserActions -->|Cerca aula| Search[Filtra risultati<br/>da rooms.json]
-    Search --> SelectRoom[Seleziona aula]
-    SelectRoom -->|Ha coordinate?| ZoomRoom{Coordinate<br/>disponibili?}
+    FindByName --> ShowResults[Mostra risultati]
+    FindByCapacity --> ShowResults
+    ShowResults --> SelectResult[Seleziona risultato]
+    SelectResult --> CheckFloor{Stesso<br/>piano?}
+    CheckFloor -->|Sì| ZoomToRoom[Zoom sull'aula]
+    CheckFloor -->|No| ChangeFloor[Cambia piano<br/>e zoom sull'aula]
     
-    ZoomRoom -->|Sì| FlyTo[Centra mappa<br/>sull'aula]
-    ZoomRoom -->|No| DisplayMap
+    %% Navigazione manuale
+    UserAction -->|Naviga menu| ClickSidebar[Clicca su edificio,<br/>piano o aula]
+    ClickSidebar --> UpdateMap[Aggiorna mappa]
+    UpdateMap --> ShowMap
     
-    FlyTo --> UpdateURL[Aggiorna URL<br/>con parametri]
+    %% Zoom e pan
+    UserAction -->|Zoom/Pan mappa| InteractMap[Ingrandisci o<br/>sposta la vista]
+    InteractMap --> SavePosition[Salva posizione<br/>nell'URL]
     
-    UserActions -->|Cambia edificio/piano| ChangeFloor[Carica nuovo<br/>file SVG]
-    ChangeFloor --> Map
+    %% Condivisione
+    UserAction -->|Condividi| CopyLink[Copia link con<br/>posizione attuale]
+    CopyLink --> Ready
     
-    UserActions -->|Zoom/Pan| MapInteraction[Interazione<br/>mappa Leaflet]
-    MapInteraction --> UpdateURL
+    %% Cambio vista
+    UserAction -->|Cambia vista| SwitchView{Tipo<br/>vista?}
+    SwitchView -->|Prospettica| LoadPerspective[Carica vista<br/>prospettica]
+    SwitchView -->|Dall'alto| LoadTop[Carica vista<br/>dall'alto]
+    LoadPerspective --> ShowMap
+    LoadTop --> ShowMap
     
-    UserActions -->|Condividi| ShareLink[Copia URL<br/>negli appunti]
-    ShareLink --> DisplayMap
+    %% Impostazioni
+    OpenSettings --> SettingsPanel[Pannello impostazioni:<br/>• Lingua IT/EN<br/>• Contrasto alto<br/>• Font dislessia<br/>• Dimensione testo<br/>• Controlli extra<br/>• Opzioni condivisione]
+    SettingsPanel --> SaveSettings[Salva preferenze]
+    SaveSettings --> ApplySettings[Applica modifiche]
+    ApplySettings --> Ready
     
-    UserActions -->|Apri impostazioni| Settings[Mostra pannello<br/>impostazioni]
-    Settings --> ToggleOptions[Abilita/Disabilita:<br/>Condivisione, Contrasto,<br/>Lingua, etc.]
-    ToggleOptions --> DisplayMap
+    %% Condivisione
+    OpenShare --> ShareOptions[Copia link sito<br/>o repository GitHub]
+    ShareOptions --> Ready
     
-    UpdateURL --> DisplayMap
+    %% Torna all'app
+    ZoomToRoom --> SavePosition
+    ChangeFloor --> SavePosition
+    SavePosition --> Ready
     
     style Start fill:#2ea043,stroke:#1a7f37,stroke-width:2px,color:#ffffff
-    style DisplayMap fill:#2ea043,stroke:#1a7f37,stroke-width:2px,color:#ffffff
+    style Ready fill:#2ea043,stroke:#1a7f37,stroke-width:2px,color:#ffffff
+    style ShowMap fill:#0969da,stroke:#0550ae,stroke-width:2px,color:#ffffff
+    style SearchBar fill:#cf222e,stroke:#a40e26,stroke-width:2px,color:#ffffff
+    style OpenSettings fill:#8250df,stroke:#6639ba,stroke-width:2px,color:#ffffff
     style LoadData fill:#bf8700,stroke:#9a6700,stroke-width:2px,color:#ffffff
-    style Map fill:#0969da,stroke:#0550ae,stroke-width:2px,color:#ffffff
-    style Search fill:#cf222e,stroke:#a40e26,stroke-width:2px,color:#ffffff
-    style Settings fill:#8250df,stroke:#6639ba,stroke-width:2px,color:#ffffff
+    style SaveSettings fill:#bf8700,stroke:#9a6700,stroke-width:2px,color:#ffffff
 ```
 
 
