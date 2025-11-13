@@ -123,6 +123,15 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
         body.dyslexic-font .material-symbols-outlined {
             font-family: 'Material Symbols Outlined' !important;
         }
+        /* Aggiustamenti per il font OpenDyslexic (è più largo) */
+        body.dyslexic-font .search-result-item .flex-1.min-w-0 {
+            max-width: calc(100% - 70px); /* Più spazio per il toggle */
+        }
+        body.dyslexic-font .search-result-item .flex-1.min-w-0 .title,
+        body.dyslexic-font .search-result-item .flex-1.min-w-0 .details {
+            font-size: 0.95em; /* Riduci leggermente il testo */
+            line-height: 1.3; /* Riduce l'altezza delle righe */
+        }
         /* Text size scaling classes */
         body.text-small {
             font-size: 14px;
@@ -214,6 +223,19 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
             white-space: nowrap; /* Mantiene il testo su una riga */
             width: 100%; /* Forza la larghezza */
         }
+        /* Permetti al testo delle impostazioni di andare a capo su mobile */
+        .search-result-item .flex-1.min-w-0 {
+            overflow: hidden; /* Previene overflow del container */
+            max-width: calc(100% - 60px); /* Lascia spazio per il toggle */
+        }
+        .search-result-item .flex-1.min-w-0 .title {
+            white-space: normal; /* Permette al testo di andare a capo */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word; /* Per parole molto lunghe */
+            hyphens: auto; /* Aggiunge trattini quando necessario */
+            max-width: 100%;
+        }
         .search-result-item .details {
             color: #4B5563; /* gray-600 */
             font-size: 12px;
@@ -221,6 +243,7 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
             word-wrap: break-word; /* Permette di spezzare le parole lunghe */
             word-break: break-word; /* Compatibilità aggiuntiva */
             width: 100%; /* Forza la larghezza */
+            max-width: 100%;
         }
         .search-result-item:hover .title,
         .search-result-item:hover .details {
@@ -1914,7 +1937,7 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                 wrapper.className = 'flex items-center justify-between gap-4 w-full';
 
                 const textContainer = document.createElement('div');
-                textContainer.className = 'flex flex-col text-left';
+                textContainer.className = 'flex flex-col text-left flex-1 min-w-0';
 
                 const titleSpan = document.createElement('span');
                 titleSpan.className = 'title';
@@ -1955,10 +1978,10 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
 
             function createTextSizeControl({ label, description }) {
                 const wrapper = document.createElement('div');
-                wrapper.className = 'flex items-center justify-between gap-4 w-full';
+                wrapper.className = 'flex flex-col gap-3 w-full';
 
                 const textContainer = document.createElement('div');
-                textContainer.className = 'flex flex-col text-left';
+                textContainer.className = 'flex flex-col text-left flex-1 min-w-0';
 
                 const titleSpan = document.createElement('span');
                 titleSpan.className = 'title';
@@ -1973,7 +1996,7 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                 }
 
                 const controlsContainer = document.createElement('div');
-                controlsContainer.className = 'text-size-controls flex-shrink-0';
+                controlsContainer.className = 'text-size-controls flex-shrink-0 self-end';
 
                 const textSizes = ['text-small', 'text-normal', 'text-large', 'text-xlarge'];
                 const sizeLabels = ['A-', 'A', 'A+', 'A++'];
@@ -2023,10 +2046,10 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
 
             function createLanguageSelector({ label, description }) {
                 const wrapper = document.createElement('div');
-                wrapper.className = 'flex items-center justify-between gap-4 w-full';
+                wrapper.className = 'flex flex-col gap-3 w-full';
 
                 const textContainer = document.createElement('div');
-                textContainer.className = 'flex flex-col text-left';
+                textContainer.className = 'flex flex-col text-left flex-1 min-w-0';
 
                 const titleSpan = document.createElement('span');
                 titleSpan.className = 'title';
@@ -2041,7 +2064,7 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                 }
 
                 const controlsContainer = document.createElement('div');
-                controlsContainer.className = 'language-selector flex-shrink-0';
+                controlsContainer.className = 'language-selector flex-shrink-0 self-end';
 
                 const languages = [
                     { code: 'it', label: 'IT' },
@@ -2242,6 +2265,15 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                     const otherInput = inputElement === searchInput ? searchInputMobile : searchInput;
                     otherInput.value = query;
                     searchRooms(query);
+                });
+
+                // Aggiungi listener per il focus: mostra i risultati se c'è del testo
+                inputElement.addEventListener('focus', (e) => {
+                    const query = e.target.value.trim();
+                    if (query) {
+                        // Se c'è del testo, rimostra i risultati
+                        searchRooms(query);
+                    }
                 });
 
                 inputElement.addEventListener('keydown', (e) => {
