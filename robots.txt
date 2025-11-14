@@ -1,11 +1,5 @@
 # robots.txt for DOVE? UniPi
 User-agent: *
-Allow: /
-Allow: /index.html
-Allow: /data/
-Allow: /assets/
-Allow: /locales/
-Allow: /polo/
+Disallow:
 
-# Sitemap location
 Sitemap: https://plumkewe.github.io/dove-unipi/sitemap.xml
