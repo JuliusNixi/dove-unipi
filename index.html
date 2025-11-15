@@ -46,14 +46,14 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" id="meta-description" content="Trova aule ed edifici al Polo Fibonacci (UniPi). Mappe interattive, piani e informazioni per orientarti rapidamente.">
+    <meta name="description" id="meta-description" content="Orientati facilmente tra gli edifici, i piani e le aule del Polo Fibonacci dell'Università di Pisa.">
     <meta name="author" content="Lyubomyr Malay">
     <meta name="keywords" id="meta-keywords" content="UniPi, Università di Pisa, Polo Fibonacci, aule, dove, navigatore, mappe, planimetrie, edificio A, edificio B, edificio C, edificio D, edificio E, aula D1, aula D2, aula M1, aula H, aula magna, laboratori, dipartimento informatica, dipartimento matematica, dipartimento fisica, piano terra, primo piano, secondo piano, aule informatica, aule studio, dove si trova, come arrivare, cercare aula">
     <meta name="theme-color" content="#E5E7EB">
-    <title id="page-title">DOVE?UNIPI - Polo Fibonacci</title>
+    <title id="page-title">DOVE?UNIPI</title>
 
-    <meta property="og:title" id="og-title" content="DOV'È QUEL AULA?! DOVEEEEE!!!">
-    <meta property="og:description" id="og-description" content="Trova aule ed edifici al Polo Fibonacci (UniPi). Mappe interattive, piani e informazioni per orientarti rapidamente.">
+    <meta property="og:title" id="og-title" content="DOVE?UNIPI">
+    <meta property="og:description" id="og-description" content="Orientati facilmente tra gli edifici, i piani e le aule del Polo Fibonacci dell'Università di Pisa.">
     <meta property="og:image" content="https://plumkewe.github.io/dove-unipi/assets/screenshots/preview.png">
     <meta property="og:image:height" content="630">
     <meta property="og:image:width" content="1200">
@@ -61,8 +61,8 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:creator" content="Lyubomyr Malay">
-    <meta name="twitter:title" id="twitter-title" content="DOV'È QUEL AULA?! DOVEEEEE!!!">
-    <meta name="twitter:description" id="twitter-description" content="Trova aule ed edifici al Polo Fibonacci (UniPi). Mappe interattive, piani e informazioni per orientarti rapidamente.">
+    <meta name="twitter:title" id="twitter-title" content="DOVE?UNIPI">
+    <meta name="twitter:description" id="twitter-description" content="Orientati facilmente tra gli edifici, i piani e le aule del Polo Fibonacci dell'Università di Pisa.">
     <meta name="twitter:image" content="https://plumkewe.github.io/dove-unipi/assets/screenshots/preview.png">
 
     <meta name="robots" content="index, follow">
@@ -85,7 +85,12 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
     <meta name="geo.position" content="43.7228;10.4017">
     <meta name="ICBM" content="43.7228, 10.4017">
     
-    <link rel="icon" href="assets/logo/favicon.png" type="image/png">
+    <!-- Favicon (PNG & SVG) - multiple sizes for search engines and social previews -->
+    <link rel="icon" href="https://plumkewe.github.io/dove-unipi/assets/logo/favicon.png" type="image/png" sizes="32x32">
+    <link rel="icon" href="https://plumkewe.github.io/dove-unipi/assets/logo/favicon.png" type="image/png" sizes="16x16">
+    <link rel="shortcut icon" href="https://plumkewe.github.io/dove-unipi/assets/logo/favicon.png" type="image/png">
+    <!-- Microsoft tile -->
+    <meta name="msapplication-TileImage" content="https://plumkewe.github.io/dove-unipi/assets/logo/favicon.png">
     
     <!-- Preload critical CSS -->
     <link rel="preload" href="assets/css/output.css" as="style">
@@ -105,10 +110,10 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "DOVE?UNIPI - Polo Fibonacci",
-      "alternateName": "DOVE UniPi - Navigatore Polo Fibonacci",
+      "name": "DOVE?UNIPI",
+      "alternateName": "DOVE?UNIPI - Polo Fibonacci",
       "url": "https://plumkewe.github.io/dove-unipi/",
-      "description": "Trova aule e edifici al Polo Fibonacci UniPi. Cerca aule come D1, D2, M1, H tra gli edifici A, B, C, D, E. Mappe interattive e planimetrie per orientarti tra i piani.",
+      "description": "Orientati facilmente tra gli edifici, i piani e le aule del Polo Fibonacci dell'Università di Pisa.",
       "applicationCategory": "NavigationApplication",
       "operatingSystem": "Any",
       "author": {
@@ -1037,7 +1042,7 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
 
     <!-- SEO Content: Hidden visually but accessible to search engines -->
     <div style="position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden;" aria-hidden="true">
-        <h1>DOVE?UNIPI - Trova Aule e Edifici al Polo Fibonacci</h1>
+        <h1>DOVE?UNIPI</h1>
         <h2>Edifici disponibili</h2>
         <p>Edificio A, Edificio B, Edificio C, Edificio D, Edificio E del Polo Fibonacci dell'Università di Pisa.</p>
         <h2>Aule principali</h2>
@@ -1491,8 +1496,6 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
 
             // Apply translations to the page
             function applyTranslations() {
-                // Update document title
-                document.title = t('page_title');
                 
                 // Update meta tags
                 const metaDescription = document.querySelector('meta[name="description"]');
