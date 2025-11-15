@@ -28,6 +28,8 @@
 - [Flowchart](#flowchart)
   - [Flusso Dati](#flusso-dati)
   - [Architettura del Progetto](#architettura-del-progetto)
+- [Prestazioni](#prestazioni)
+  - [PageSpeed Insights](#pagespeed-insights)
 - [Funzionalità](#funzionalità)
   - [Ricerca intelligente](#ricerca-intelligente)
   - [Accessibilità](#accessibilità)
@@ -298,7 +300,34 @@ graph TB
     style SaveSettings fill:#bf8700,stroke:#9a6700,stroke-width:2px,color:#ffffff
 ```
 
+## Prestazioni
 
+### PageSpeed Insights
+
+<table>
+  <thead>
+    <tr>
+      <th>DESKTOP</th>
+      <th>MOBILE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img src="assets/screenshots/PSI_PC.jpg" alt="PageSpeed Insights Desktop"></td>
+      <td><img src="assets/screenshots/PSI_MB.jpg" alt="PageSpeed Insights Mobile"></td>
+    </tr>
+  </tbody>
+</table>
+
+### GTmetrix
+
+<table>
+  <tbody>
+    <tr>
+      <td><img src="assets/screenshots/GTM.jpg" alt="GTmetrix Performance"></td>
+    </tr>
+  </tbody>
+</table>
 
 ## Funzionalità
 
