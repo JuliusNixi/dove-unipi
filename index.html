@@ -46,14 +46,14 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Trova aule e edifici al Polo Fibonacci UniPi: Edificio A, B, C, D, E. Cerca aule come D1, D2, M1, H, Aula Magna, laboratori informatica e dipartimenti. Mappe interattive e planimetrie per orientarti.">
+    <meta name="description" id="meta-description" content="Trova aule e edifici al Polo Fibonacci UniPi: Edificio A, B, C, D, E. Cerca aule come D1, D2, M1, H, Aula Magna, laboratori informatica e dipartimenti. Mappe interattive e planimetrie per orientarti.">
     <meta name="author" content="Lyubomyr Malay">
-    <meta name="keywords" content="UniPi, Università di Pisa, Polo Fibonacci, aule, dove, navigatore, mappe, planimetrie, edificio A, edificio B, edificio C, edificio D, edificio E, aula D1, aula D2, aula M1, aula H, aula magna, laboratori, dipartimento informatica, dipartimento matematica, dipartimento fisica, piano terra, primo piano, secondo piano, aule informatica, aule studio, dove si trova, come arrivare, cercare aula"
+    <meta name="keywords" id="meta-keywords" content="UniPi, Università di Pisa, Polo Fibonacci, aule, dove, navigatore, mappe, planimetrie, edificio A, edificio B, edificio C, edificio D, edificio E, aula D1, aula D2, aula M1, aula H, aula magna, laboratori, dipartimento informatica, dipartimento matematica, dipartimento fisica, piano terra, primo piano, secondo piano, aule informatica, aule studio, dove si trova, come arrivare, cercare aula">
     <meta name="theme-color" content="#E5E7EB">
-    <title>DOVE?UNIPI - Polo Fibonacci</title>
+    <title id="page-title">DOVE?UNIPI - Polo Fibonacci</title>
 
-    <meta property="og:title" content="DOV'È QUEL AULA?! DOVEEEEE!!!">
-    <meta property="og:description" content="So che ti sei perso al polo Fibonacci dell'Università di Pisa. Usa DOVE? UniPi per trovare le aule e orientarti tra gli edifici e i piani.">
+    <meta property="og:title" id="og-title" content="DOV'È QUEL AULA?! DOVEEEEE!!!">
+    <meta property="og:description" id="og-description" content="So che ti sei perso al polo Fibonacci dell'Università di Pisa. Usa DOVE? UniPi per trovare le aule e orientarti tra gli edifici e i piani.">
     <meta property="og:image" content="https://plumkewe.github.io/dove-unipi/assets/screenshots/preview.png">
     <meta property="og:image:height" content="630">
     <meta property="og:image:width" content="1200">
@@ -61,8 +61,8 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:creator" content="Lyubomyr Malay">
-    <meta name="twitter:title" content="DOV'È QUEL AULA?! DOVEEEEE!!!">
-    <meta name="twitter:description" content="So che ti sei perso al polo Fibonacci dell'Università di Pisa. Usa DOVE? UniPi per trovare le aule e orientarti tra gli edifici e i piani.">
+    <meta name="twitter:title" id="twitter-title" content="DOV'È QUEL AULA?! DOVEEEEE!!!">
+    <meta name="twitter:description" id="twitter-description" content="So che ti sei perso al polo Fibonacci dell'Università di Pisa. Usa DOVE? UniPi per trovare le aule e orientarti tra gli edifici e i piani.">
     <meta name="twitter:image" content="https://plumkewe.github.io/dove-unipi/assets/screenshots/preview.png">
 
     <meta name="robots" content="index, follow">
@@ -87,12 +87,8 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
     
     <link rel="icon" href="assets/logo/favicon.png" type="image/png">
     
-    <!-- Cache Control for static assets (1 month) -->
-    <meta http-equiv="Cache-Control" content="public, max-age=2592000">
-    
-    <!-- Preload critical assets with caching -->
+    <!-- Preload critical CSS -->
     <link rel="preload" href="assets/css/output.css" as="style">
-    <link rel="preload" href="assets/logo/favicon.png" as="image">
     
     <!-- Preconnect to external domains for faster loading -->
     <link rel="preconnect" href="https://unpkg.com" crossorigin>
@@ -349,6 +345,40 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
         }
         .nav-item.selected {
             background-color: rgba(0, 0, 0, 0.1);
+        }
+        .clear-search-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 0 12px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: #9CA3AF; /* gray-400 */
+            transition: color 0.2s ease-in-out;
+        }
+        .clear-search-button:not(.hidden) {
+            display: flex;
+        }
+        .clear-search-button:hover {
+            color: #4B5563; /* gray-600 */
+        }
+        .clear-search-button:focus-visible {
+            outline: 2px solid #4B5563;
+            outline-offset: 2px;
+        }
+        .high-contrast .clear-search-button {
+            background-color: transparent !important;
+            border: none !important;
+            color: black !important;
+        }
+        .high-contrast .clear-search-button:focus-visible {
+            outline: none !important;
+            box-shadow: none !important;
         }
         /* Stile per Google Material Symbols */
         .material-symbols-outlined {
@@ -729,6 +759,11 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
             color: black !important;
             border-color: black !important;
         }
+        .high-contrast .water-dispenser-marker,
+        .high-contrast .water-dispenser-marker * {
+            background-color: transparent !important;
+            border-color: transparent !important;
+        }
         .high-contrast svg * {
             fill: black !important;
             stroke: black !important;
@@ -1034,7 +1069,10 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                         <span class="material-symbols-outlined text-gray-500">search</span>
                     </span>
-                    <input type="text" id="search-input" placeholder="Cerca un'aula..." class="w-full p-3 pl-10 pr-4 bg-transparent border-none rounded-lg focus:outline-none" autocomplete="off">
+                    <input type="text" id="search-input" placeholder="Cerca un'aula..." class="w-full p-3 pl-10 pr-10 bg-transparent border-none rounded-lg focus:outline-none" autocomplete="off">
+                    <button type="button" id="clear-search-btn" class="clear-search-button hidden" aria-label="Cancella ricerca">
+                        <span class="material-symbols-outlined" style="font-size: 24px; line-height: 1;">close</span>
+                    </button>
                 </div>
                 <div id="search-results" class="hidden">
                     <!-- I risultati della ricerca verranno inseriti qui -->
@@ -1081,7 +1119,10 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                 <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                     <span class="material-symbols-outlined text-gray-500">search</span>
                 </span>
-                <input type="text" id="search-input-mobile" placeholder="Cerca un'aula..." class="w-full p-3 pl-10 pr-4 bg-transparent border-none rounded-lg focus:outline-none" autocomplete="off">
+                <input type="text" id="search-input-mobile" placeholder="Cerca un'aula..." class="w-full p-3 pl-10 pr-10 bg-transparent border-none rounded-lg focus:outline-none" autocomplete="off">
+                <button type="button" id="clear-search-btn-mobile" class="clear-search-button hidden" aria-label="Cancella ricerca">
+                    <span class="material-symbols-outlined" style="font-size: 24px; line-height: 1;">close</span>
+                </button>
             </div>
             <div id="search-results-mobile" class="overflow-y-auto max-h-48 hidden">
                 <!-- Mobile search results here -->
@@ -1392,6 +1433,8 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
             const searchResults = document.getElementById('search-results');
             const searchInputMobile = document.getElementById('search-input-mobile');
             const searchResultsMobile = document.getElementById('search-results-mobile');
+            const clearSearchBtn = document.getElementById('clear-search-btn');
+            const clearSearchBtnMobile = document.getElementById('clear-search-btn-mobile');
             const shareBtn = document.getElementById('share-btn');
             const accessibilityToggle = document.getElementById('accessibility-toggle');
             const storedShareCoordinates = localStorage.getItem('shareCoordinatesEnabled');
@@ -1449,11 +1492,14 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
             // Apply translations to the page
             function applyTranslations() {
                 // Update document title
-                document.title = t('app_title');
+                document.title = t('page_title');
                 
                 // Update meta tags
                 const metaDescription = document.querySelector('meta[name="description"]');
                 if (metaDescription) metaDescription.content = t('meta_description');
+                
+                const metaKeywords = document.querySelector('meta[name="keywords"]');
+                if (metaKeywords) metaKeywords.content = t('meta_keywords');
                 
                 const metaOgTitle = document.querySelector('meta[property="og:title"]');
                 if (metaOgTitle) metaOgTitle.content = t('meta_og_title');
@@ -1469,6 +1515,12 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                 
                 // Update HTML lang attribute
                 document.documentElement.lang = currentLanguage;
+                
+                // Update og:locale based on language
+                const metaOgLocale = document.querySelector('meta[property="og:locale"]');
+                if (metaOgLocale) {
+                    metaOgLocale.content = currentLanguage === 'en' ? 'en_US' : 'it_IT';
+                }
                 
                 // Update search placeholders (con controllo se esistono)
                 if (searchInput) searchInput.placeholder = t('search_placeholder');
@@ -1662,6 +1714,17 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
             let currentSuggestionIndex = 0;
             let searchPlaceholderInterval = null;
 
+            function updateClearButtonsVisibility() {
+                if (clearSearchBtn) {
+                    const hasValue = Boolean(searchInput && searchInput.value && searchInput.value.trim().length);
+                    clearSearchBtn.classList.toggle('hidden', !hasValue);
+                }
+                if (clearSearchBtnMobile) {
+                    const hasValueMobile = Boolean(searchInputMobile && searchInputMobile.value && searchInputMobile.value.trim().length);
+                    clearSearchBtnMobile.classList.toggle('hidden', !hasValueMobile);
+                }
+            }
+
             // Funzione per aggiornare il placeholder
             function updateSearchPlaceholder() {
                 currentSuggestionIndex = (currentSuggestionIndex + 1) % searchSuggestions.length;
@@ -1789,6 +1852,7 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
 
             // Funzione per la ricerca
             function searchRooms(query = '') {
+                updateClearButtonsVisibility();
                 const currentSearchResults = isMobile() ? searchResultsMobile : searchResults;
                 
                 if (!query) {
@@ -2005,6 +2069,7 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                             // Aggiorna entrambi gli input
                             currentSearchInput.value = newValue;
                             if (otherSearchInput) otherSearchInput.value = newValue;
+                            updateClearButtonsVisibility();
                             
                             // Usa setTimeout per permettere l'aggiornamento dell'input prima di cercare
                             setTimeout(() => {
@@ -2088,6 +2153,7 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                             // Sincronizza l'altro input
                             const otherInput = currentSearchInput === searchInput ? searchInputMobile : searchInput;
                             otherInput.value = result.room.nome;
+                            updateClearButtonsVisibility();
                             if (isMobile()) {
                                 closeSidebar();
                             }
@@ -2527,13 +2593,14 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
             }
 
             // Event listener per la ricerca
-            function setupSearchListeners(inputElement, resultsElement) {
+            function setupSearchListeners(inputElement, resultsElement, clearButtonElement = null) {
                 inputElement.addEventListener('input', (e) => {
                     const query = e.target.value;
                     // Sincronizza l'altro input
                     const otherInput = inputElement === searchInput ? searchInputMobile : searchInput;
                     otherInput.value = query;
                     searchRooms(query);
+                    updateClearButtonsVisibility();
                 });
 
                 // Aggiungi listener per il focus: mostra i risultati se c'è del testo
@@ -2561,8 +2628,11 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                     } else if (e.key === 'Enter') {
                         e.preventDefault();
                         
-                        // Se c'è un elemento selezionato con le frecce, cliccalo
-                        if (selectedSearchResultIndex > -1 && items[selectedSearchResultIndex]) {
+                        // Se c'è un solo risultato, selezionalo automaticamente
+                        if (items.length === 1) {
+                            items[0].click();
+                        } else if (selectedSearchResultIndex > -1 && items[selectedSearchResultIndex]) {
+                            // Se c'è un elemento selezionato con le frecce, cliccalo
                             items[selectedSearchResultIndex].click();
                         } else {
                             // Altrimenti, se c'è un suggerimento visibile (primo elemento), completalo automaticamente
@@ -2575,12 +2645,40 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                                 }
                             }
                         }
+                    } else if (e.key === 'Escape') {
+                        e.preventDefault();
+                        selectedSearchResultIndex = -1;
+                        if (clearButtonElement && !clearButtonElement.classList.contains('hidden')) {
+                            clearButtonElement.click();
+                        } else {
+                            currentSearchResults.classList.add('hidden');
+                        }
                     }
                 });
+
+                if (clearButtonElement) {
+                    clearButtonElement.addEventListener('click', () => {
+                        inputElement.value = '';
+                        const otherInput = inputElement === searchInput ? searchInputMobile : searchInput;
+                        if (otherInput) {
+                            otherInput.value = '';
+                        }
+                        selectedSearchResultIndex = -1;
+                        searchRooms('');
+                        resultsElement.classList.add('hidden');
+                        const otherResultsElement = inputElement === searchInput ? searchResultsMobile : searchResults;
+                        if (otherResultsElement) {
+                            otherResultsElement.classList.add('hidden');
+                        }
+                        updateClearButtonsVisibility();
+                        inputElement.focus();
+                    });
+                }
             }
 
-            setupSearchListeners(searchInput, searchResults);
-            setupSearchListeners(searchInputMobile, searchResultsMobile);
+            setupSearchListeners(searchInput, searchResults, clearSearchBtn);
+            setupSearchListeners(searchInputMobile, searchResultsMobile, clearSearchBtnMobile);
+            updateClearButtonsVisibility();
 
             // Aggiungi listener per le scorciatoie da tastiera
             document.addEventListener('keydown', (e) => {
