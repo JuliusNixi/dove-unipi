@@ -303,6 +303,8 @@ graph TB
 
 ## Prestazioni
 
+<p align="right">(<a href="#indice">indice</a>)</p>
+
 ### PageSpeed Insights
 
 <table>
@@ -356,7 +358,7 @@ Digitando `condividi` o `share`, potrai facilmente copiare il **link al sito** o
 Digitando `feedback` troverai due risultati per fornire feedback sul progetto. Inoltre, quando non trovi ciò che cerchi, ti verrà proposto automaticamente di lasciare un feedback per aiutarci a migliorare!
 
 Usa le frecce <kbd>↑</kbd> e <kbd>↓</kbd> per scorrere i risultati e premi <kbd>Invio</kbd> per selezionarne uno.
-La ricerca si avvia automaticamente mentre digiti — non serve cliccare sulla barra di ricerca.
+La ricerca si avvia automaticamente mentre digiti — non serve cliccare sulla barra di ricerca. Inoltre, se il risultato è unico oppure stai per cercare una special keyword (`impostazioni`, `feedback`, `condividi`...), ti basterà premere <kbd>Enter</kbd> per avviare la ricerca.
 
 <hr>
 
@@ -434,6 +436,8 @@ In futuro verranno aggiunte altre **lingue!**
 
 ### Altri dati
 
+<p align="right">(<a href="#indice">indice</a>)</p>
+
 #### Distributori d'acqua
 
 È disponibile in **versione alfa** la possibilità di visualizzare i **distributori d'acqua** presenti negli edifici del Polo Fibonacci.
@@ -451,6 +455,8 @@ Puoi cercare i distributori digitando `Dist...` nella barra di ricerca. I risult
 <hr>
 
 ## Funzionalità che vorrei aggiungere
+
+<p align="right">(<a href="#indice">indice</a>)</p>
 
 - [ ] **Occupazione aule:** Collegare in qualche modo University Planner per poter vedere le prenotazioni direttamente sul sito.
 
