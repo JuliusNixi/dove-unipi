@@ -83,6 +83,10 @@
     "original": "Vista dall'alto",
     "translation": "Top view"
   },
+  "view_flip": {
+    "original": "Ribalta mappa",
+    "translation": "Flip map"
+  },
   "settings_title": {
     "original": "Impostazioni",
     "translation": "Settings"

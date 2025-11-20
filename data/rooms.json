@@ -15,7 +15,9 @@
               {
                 "id": "fib_x1-b-0",
                 "nome": "Aula X1",
-                "alias": ["X1"],
+                "alias": [
+                  "X1"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 16,
@@ -31,7 +33,9 @@
               {
                 "id": "fib_x2-b-0",
                 "nome": "Aula X2",
-                "alias": ["X2"],
+                "alias": [
+                  "X2"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 16,
@@ -47,7 +51,11 @@
               {
                 "id": "fib_lab1-b-0",
                 "nome": "Laboratorio1",
-                "alias": ["Lab 1", "Laboratorio 1"],
+                "alias": [
+                  "Lab 1",
+                  "Laboratorio 1",
+                  "lab1"
+                ],
                 "type": "laboratorio",
                 "note": "",
                 "accesso_disabili": true,
@@ -60,7 +68,11 @@
               {
                 "id": "fib_lab2-b-0",
                 "nome": "Laboratorio2",
-                "alias": ["Lab 2", "Laboratorio 2"],
+                "alias": [
+                  "Lab 2",
+                  "Laboratorio 2",
+                  "lab2"
+                ],
                 "type": "laboratorio",
                 "note": "",
                 "accesso_disabili": true,
@@ -73,7 +85,11 @@
               {
                 "id": "fib_lab3-b-0",
                 "nome": "Laboratorio3",
-                "alias": ["Lab 3", "Laboratorio 3"],
+                "alias": [
+                  "Lab 3",
+                  "Laboratorio 3",
+                  "lab3"
+                ],
                 "type": "laboratorio",
                 "note": "",
                 "accesso_disabili": true,
@@ -86,7 +102,11 @@
               {
                 "id": "fib_lab4-b-0",
                 "nome": "Laboratorio4",
-                "alias": ["Lab 4", "Laboratorio 4"],
+                "alias": [
+                  "Lab 4",
+                  "Laboratorio 4",
+                  "lab4"
+                ],
                 "type": "laboratorio",
                 "note": "",
                 "accesso_disabili": true,
@@ -99,7 +119,11 @@
               {
                 "id": "fib_lab5-b-0",
                 "nome": "Laboratorio5",
-                "alias": ["Lab 5", "Laboratorio 5"],
+                "alias": [
+                  "Lab 5",
+                  "Laboratorio 5",
+                  "lab5"
+                ],
                 "type": "laboratorio",
                 "note": "",
                 "accesso_disabili": true,
@@ -112,7 +136,11 @@
               {
                 "id": "fib_lab6-b-0",
                 "nome": "Laboratorio6",
-                "alias": ["Lab 6", "Laboratorio 6"],
+                "alias": [
+                  "Lab 6",
+                  "Laboratorio 6",
+                  "lab6"
+                ],
                 "type": "laboratorio",
                 "note": "",
                 "accesso_disabili": true,
@@ -125,7 +153,11 @@
               {
                 "id": "fib_lab7-b-0",
                 "nome": "Laboratorio7",
-                "alias": ["Lab 7", "Laboratorio 7"],
+                "alias": [
+                  "Lab 7",
+                  "Laboratorio 7",
+                  "lab7"
+                ],
                 "type": "laboratorio",
                 "note": "",
                 "accesso_disabili": true,
@@ -138,7 +170,11 @@
               {
                 "id": "fib_lab8-b-0",
                 "nome": "Laboratorio8",
-                "alias": ["Lab 8", "Laboratorio 8"],
+                "alias": [
+                  "Lab 8",
+                  "Laboratorio 8",
+                  "lab8"
+                ],
                 "type": "laboratorio",
                 "note": "",
                 "accesso_disabili": true,
@@ -151,7 +187,11 @@
               {
                 "id": "fib_lab9-b-0",
                 "nome": "Laboratorio9",
-                "alias": ["Lab 9", "Laboratorio 9"],
+                "alias": [
+                  "Lab 9",
+                  "Laboratorio 9",
+                  "lab9"
+                ],
                 "type": "laboratorio",
                 "note": "",
                 "accesso_disabili": true,
@@ -164,7 +204,11 @@
               {
                 "id": "fib_lab10-b-0",
                 "nome": "Laboratorio10",
-                "alias": ["Lab 10", "Laboratorio 10"],
+                "alias": [
+                  "Lab 10",
+                  "Laboratorio 10",
+                  "lab10"
+                ],
                 "type": "laboratorio",
                 "note": "",
                 "accesso_disabili": true,
@@ -177,7 +221,11 @@
               {
                 "id": "fib_lab11-b-0",
                 "nome": "Laboratorio11",
-                "alias": ["Lab 11", "Laboratorio 11"],
+                "alias": [
+                  "Lab 11",
+                  "Laboratorio 11",
+                  "lab11"
+                ],
                 "type": "laboratorio",
                 "note": "",
                 "accesso_disabili": true,
@@ -190,7 +238,11 @@
               {
                 "id": "fib_lab12-b-0",
                 "nome": "Laboratorio12",
-                "alias": ["Lab 12", "Laboratorio 12"],
+                "alias": [
+                  "Lab 12",
+                  "Laboratorio 12",
+                  "lab12"
+                ],
                 "type": "laboratorio",
                 "note": "",
                 "accesso_disabili": true,
@@ -203,7 +255,9 @@
               {
                 "id": "fib_x3-b-0",
                 "nome": "Aula X3",
-                "alias": ["X3"],
+                "alias": [
+                  "X3"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 16,
@@ -219,7 +273,9 @@
               {
                 "id": "fib_x4-b-0",
                 "nome": "Aula X4",
-                "alias": ["X4", "Aula Studio X4"],
+                "alias": [
+                  "X4"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 6,
@@ -235,7 +291,9 @@
               {
                 "id": "fib_x5-b-0",
                 "nome": "Aula X5",
-                "alias": ["X5"],
+                "alias": [
+                  "X5"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 16,
@@ -251,7 +309,9 @@
               {
                 "id": "fib_x6-b-0",
                 "nome": "Aula X6",
-                "alias": ["X6"],
+                "alias": [
+                  "X6"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 16,
@@ -267,7 +327,9 @@
               {
                 "id": "fib_x7-b-0",
                 "nome": "Aula X7",
-                "alias": ["X7"],
+                "alias": [
+                  "X7"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 24,
@@ -283,7 +345,9 @@
               {
                 "id": "fib_a-b-0",
                 "nome": "Aula A",
-                "alias": ["A"],
+                "alias": [
+                  "A"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 217,
@@ -299,7 +363,9 @@
               {
                 "id": "fib_b-b-0",
                 "nome": "Aula B",
-                "alias": ["B"],
+                "alias": [
+                  "B"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 135,
@@ -315,7 +381,9 @@
               {
                 "id": "fib_c-b-0",
                 "nome": "Aula C",
-                "alias": ["C"],
+                "alias": [
+                  "C"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 135,
@@ -331,7 +399,9 @@
               {
                 "id": "fib_d-b-0",
                 "nome": "Aula D",
-                "alias": ["D"],
+                "alias": [
+                  "D"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 215,
@@ -347,7 +417,9 @@
               {
                 "id": "fib_e-b-0",
                 "nome": "Aula E",
-                "alias": ["E"],
+                "alias": [
+                  "E"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 217,
@@ -363,7 +435,12 @@
               {
                 "id": "fib_h-lab-b-0",
                 "nome": "Aula H-Lab",
-                "alias": ["H-Lab", "HLab", "H Lab", "Laboratorio H"],
+                "alias": [
+                  "H-Lab",
+                  "HLab",
+                  "H Lab",
+                  "Laboratorio H"
+                ],
                 "type": "laboratorio",
                 "note": "",
                 "capienza": 40,
@@ -379,7 +456,12 @@
               {
                 "id": "fib_i-lab-b-0",
                 "nome": "Aula I-Lab",
-                "alias": ["I-Lab", "ILab", "I Lab", "Laboratorio I"],
+                "alias": [
+                  "I-Lab",
+                  "ILab",
+                  "I Lab",
+                  "Laboratorio I"
+                ],
                 "type": "laboratorio",
                 "note": "",
                 "capienza": 30,
@@ -396,7 +478,9 @@
               {
                 "id": "fib_l-b-0",
                 "nome": "Aula L",
-                "alias": ["L"],
+                "alias": [
+                  "L"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 87,
@@ -412,7 +496,12 @@
               {
                 "id": "fib_m-lab-b-0",
                 "nome": "Aula M-Lab",
-                "alias": ["M-Lab", "MLab", "M Lab", "Laboratorio M"],
+                "alias": [
+                  "M-Lab",
+                  "MLab",
+                  "M Lab",
+                  "Laboratorio M"
+                ],
                 "type": "laboratorio",
                 "note": "",
                 "capienza": 40,
@@ -428,7 +517,9 @@
               {
                 "id": "fib_f-b-0",
                 "nome": "Aula F",
-                "alias": ["F"],
+                "alias": [
+                  "F"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 112,
@@ -444,7 +535,9 @@
               {
                 "id": "fib_g-b-0",
                 "nome": "Aula G",
-                "alias": ["G"],
+                "alias": [
+                  "G"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 199,
@@ -460,7 +553,9 @@
               {
                 "id": "fib_n-b-0",
                 "nome": "Aula N",
-                "alias": ["N"],
+                "alias": [
+                  "N"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 72,
@@ -476,7 +571,9 @@
               {
                 "id": "fib_o-b-0",
                 "nome": "Aula O",
-                "alias": ["O"],
+                "alias": [
+                  "O"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 36,
@@ -492,7 +589,9 @@
               {
                 "id": "fib_p-b-0",
                 "nome": "Aula P",
-                "alias": ["P"],
+                "alias": [
+                  "P"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 36,
@@ -510,7 +609,9 @@
               {
                 "id": "fib_a1-b-0",
                 "nome": "Aula A1",
-                "alias": ["A1"],
+                "alias": [
+                  "A1"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 137,
@@ -526,7 +627,9 @@
               {
                 "id": "fib_b1-b-0",
                 "nome": "Aula B1",
-                "alias": ["B1"],
+                "alias": [
+                  "B1"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 109,
@@ -542,7 +645,9 @@
               {
                 "id": "fib_c1-b-0",
                 "nome": "Aula C1",
-                "alias": ["C1"],
+                "alias": [
+                  "C1"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 109,
@@ -558,7 +663,9 @@
               {
                 "id": "fib_d1-b-0",
                 "nome": "Aula D1",
-                "alias": ["D1"],
+                "alias": [
+                  "D1"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 137,
@@ -574,7 +681,9 @@
               {
                 "id": "fib_e1-b-0",
                 "nome": "Aula E1",
-                "alias": ["E1"],
+                "alias": [
+                  "E1"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 137,
@@ -590,7 +699,9 @@
               {
                 "id": "fib_i1-b-0",
                 "nome": "Aula I1",
-                "alias": ["I1"],
+                "alias": [
+                  "I1"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 61,
@@ -606,7 +717,9 @@
               {
                 "id": "fib_l1-b-0",
                 "nome": "Aula L1",
-                "alias": ["L1"],
+                "alias": [
+                  "L1"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 69,
@@ -622,7 +735,9 @@
               {
                 "id": "fib_m1-b-0",
                 "nome": "Aula M1",
-                "alias": ["M1"],
+                "alias": [
+                  "M1"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 69,
@@ -638,7 +753,9 @@
               {
                 "id": "fib_n1-b-0",
                 "nome": "Aula N1",
-                "alias": ["N1"],
+                "alias": [
+                  "N1"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 61,
@@ -654,7 +771,9 @@
               {
                 "id": "fib_o1-b-0",
                 "nome": "Aula O1",
-                "alias": ["O1"],
+                "alias": [
+                  "O1"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 60,
@@ -670,7 +789,9 @@
               {
                 "id": "fib_p1-b-0",
                 "nome": "Aula P1",
-                "alias": ["P1"],
+                "alias": [
+                  "P1"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 123,
@@ -686,7 +807,9 @@
               {
                 "id": "fib_f1-b-0",
                 "nome": "Aula F1",
-                "alias": ["F1"],
+                "alias": [
+                  "F1"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 68,
@@ -702,7 +825,9 @@
               {
                 "id": "fib_g1-b-0",
                 "nome": "Aula G1",
-                "alias": ["G1"],
+                "alias": [
+                  "G1"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 61,
@@ -718,7 +843,9 @@
               {
                 "id": "fib_v1-b-0",
                 "nome": "Aula V1",
-                "alias": ["V1"],
+                "alias": [
+                  "V1"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 47,
@@ -734,7 +861,9 @@
               {
                 "id": "fib_q1-lab-b-0",
                 "nome": "Aula Q1",
-                "alias": ["Q1-Lab"],
+                "alias": [
+                  "Q1-Lab"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 10,
@@ -750,7 +879,9 @@
               {
                 "id": "fib_r1-b-0",
                 "nome": "Aula R1",
-                "alias": ["R1"],
+                "alias": [
+                  "R1"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 30,
@@ -766,7 +897,9 @@
               {
                 "id": "fib_s1-b-0",
                 "nome": "Aula S1",
-                "alias": ["S1"],
+                "alias": [
+                  "S1"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 25,
@@ -782,7 +915,9 @@
               {
                 "id": "fib_t1-b-0",
                 "nome": "Aula T1",
-                "alias": ["T1"],
+                "alias": [
+                  "T1"
+                ],
                 "type": "aula",
                 "note": "",
                 "capienza": 25,
@@ -808,7 +943,9 @@
               {
                 "id": "fib_di-c-2",
                 "nome": "Dipartimento di Informatica",
-                "alias": ["DI"],
+                "alias": [
+                  "DI"
+                ],
                 "type": "dipartimento",
                 "note": "",
                 "link-mappa": "https://di.unipi.it/mappa-dipartimento/",
@@ -856,7 +993,9 @@
               {
                 "id": "fib_sg-c-2",
                 "nome": "Sala GERACE",
-                "alias": ["Sala convegni GERANCE"],
+                "alias": [
+                  "Sala convegni GERANCE"
+                ],
                 "type": "sala",
                 "note": "",
                 "accesso_disabili": true,
@@ -869,7 +1008,9 @@
               {
                 "id": "fib_sse-c-2",
                 "nome": "Seminari EST",
-                "alias": ["Sala seminari EST"],
+                "alias": [
+                  "Sala seminari EST"
+                ],
                 "type": "sala",
                 "note": "",
                 "accesso_disabili": true,
@@ -882,7 +1023,9 @@
               {
                 "id": "fib_sse-c-2",
                 "nome": "Seminari OVEST",
-                "alias": ["Sala seminari OVEST"],
+                "alias": [
+                  "Sala seminari OVEST"
+                ],
                 "type": "sala",
                 "note": "",
                 "accesso_disabili": true,
@@ -956,7 +1099,10 @@
               {
                 "id": "fib_d4-d-0",
                 "nome": "Aula D4",
-                "alias": ["D4", "Informatica"],
+                "alias": [
+                  "D4",
+                  "Informatica"
+                ],
                 "capienza": 168,
                 "presenza_pc": false,
                 "numero_pc": 0,
@@ -1007,12 +1153,34 @@
         },
         "e": {
           "piano": {
-            "0": [],
+            "0": [
+              {
+                "id": "fib_ps1-e-0",
+                "nome": "Aula PS1",
+                "alias": [
+                  "PS1"
+                ],
+                "note": "",
+                "type": "aula",
+                "capienza": 112,
+                "proiettore": true,
+                "rete": false,
+                "accesso_disabili": true,
+                "autoparlanti": true,
+                "coordinates": {
+                  "x": 303,
+                  "y": 320,
+                  "zoom": 2
+                }
+              }
+            ],
             "1": [
               {
                 "id": "fib_magna-e-0",
                 "nome": "Aula Magna",
-                "alias": ["Magna"],
+                "alias": [
+                  "Magna"
+                ],
                 "note": "",
                 "type": "aula",
                 "capienza": 224,
@@ -1022,6 +1190,25 @@
                 "coordinates": {
                   "x": 521,
                   "y": 211,
+                  "zoom": 2
+                }
+              },
+              {
+                "id": "fib_ps4-e-0",
+                "nome": "Aula PS4",
+                "alias": [
+                  "PS4"
+                ],
+                "type": "aula",
+                "note": "",
+                "capienza": 48,
+                "proiettore": true,
+                "rete": false,
+                "accesso_disabili": true,
+                "autoparlanti": true,
+                "coordinates": {
+                  "x": 255,
+                  "y": 339,
                   "zoom": 2
                 }
               }

@@ -163,7 +163,7 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
       "browserRequirements": "Requires JavaScript. Requires HTML5.",
       "softwareVersion": "1.0",
       "datePublished": "2025",
-      "dateModified": "2025-11-16"
+      "dateModified": "2025-11-20"
     }
     </script>
 
@@ -1157,6 +1157,12 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
             z-index: 1;
             /* Mappa al livello più basso */
             position: relative;
+            transition: transform 0.3s ease-in-out;
+            transform-origin: center center;
+        }
+
+        #map.map-flipped {
+            transform: rotate(180deg);
         }
 
         main#main-content,
@@ -2003,6 +2009,13 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                     aria-label="Vista dall'alto" data-tooltip="Vista dall'alto">
                     <span class="material-symbols-outlined" style="font-size: 32px; line-height: 1;">grid_view</span>
                 </button>
+                <button id="flip-view-btn"
+                    class="p-2 hover-effect text-gray-900 transition-colors duration-200 hidden"
+                    aria-label="Ribalta mappa" data-tooltip="Ribalta mappa">
+                    <span class="material-symbols-outlined" style="font-size: 32px; line-height: 1;">
+                        screen_rotation_alt
+                    </span>
+                </button>
             </div>
 
             <!-- Pulsante Condividi -->
@@ -2359,6 +2372,11 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
             const viewControls = document.getElementById('view-controls');
             const perspectiveViewBtn = document.getElementById('perspective-view-btn');
             const topViewBtn = document.getElementById('top-view-btn');
+            const flipViewBtn = document.getElementById('flip-view-btn');
+            const mapContainer = document.getElementById('map');
+            if (flipViewBtn) {
+                flipViewBtn.setAttribute('aria-pressed', 'false');
+            }
 
             // Elementi della barra di ricerca
             const searchInput = document.getElementById('search-input');
@@ -2467,6 +2485,10 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                 if (topViewBtn) {
                     topViewBtn.setAttribute('data-tooltip', t('view_top'));
                     topViewBtn.setAttribute('aria-label', t('view_top'));
+                }
+                if (flipViewBtn) {
+                    flipViewBtn.setAttribute('data-tooltip', t('view_flip'));
+                    flipViewBtn.setAttribute('aria-label', t('view_flip'));
                 }
                 if (zoomInBtn) {
                     zoomInBtn.setAttribute('data-tooltip', t('zoom_in'));
@@ -2623,6 +2645,15 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
             let svgOverlay = null; // Layer SVG corrente
             let selectedSearchResultIndex = -1;
             let waterDispenserMarkers = []; // Array per i marker degli erogatori d'acqua
+            let shortLinkContext = null;
+            let mapInteractionGuardsInstalled = false;
+            let programmaticMapChange = false;
+            let programmaticMapChangeResetTimeout = null;
+            let isMapFlipped = false;
+            let originalMapPanBy = null;
+            let originalMapInternalPanBy = null;
+            let mapPanByPatched = false;
+            let flipDragHandlerRegistered = false;
 
             // Sistema di lazy loading e caching per le mappe SVG
             const svgCache = new Map();
@@ -2640,6 +2671,149 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
             ];
             let currentSuggestionIndex = 0;
             let searchPlaceholderInterval = null;
+
+            const SHORT_LINK_ELIGIBLE_TYPES = new Set(['aula', 'dipartimento', 'laboratorio', 'sala']);
+
+            function isRoomEligibleForShortLink(room) {
+                if (!room) return false;
+                if (!room.type) return true; // fallback per dati incompleti (es. PS1/PS4)
+                return SHORT_LINK_ELIGIBLE_TYPES.has(room.type);
+            }
+
+            function markProgrammaticMapChange() {
+                programmaticMapChange = true;
+                if (programmaticMapChangeResetTimeout) {
+                    clearTimeout(programmaticMapChangeResetTimeout);
+                }
+                programmaticMapChangeResetTimeout = setTimeout(() => {
+                    programmaticMapChange = false;
+                    programmaticMapChangeResetTimeout = null;
+                }, 800);
+            }
+
+            function clearProgrammaticMapChangeFlag() {
+                programmaticMapChange = false;
+                if (programmaticMapChangeResetTimeout) {
+                    clearTimeout(programmaticMapChangeResetTimeout);
+                    programmaticMapChangeResetTimeout = null;
+                }
+            }
+
+            function normalizeShortCode(value) {
+                return value ? value.toString().trim().toLowerCase().replace(/\s+/g, '') : '';
+            }
+
+            function getRoomShortCode(room) {
+                if (!room) return null;
+                if (Array.isArray(room.alias)) {
+                    const validAlias = room.alias.find(alias => alias && alias.trim().length > 0);
+                    if (validAlias) {
+                        return validAlias.trim();
+                    }
+                }
+                if (room.nome && room.nome.trim().length > 0) {
+                    return room.nome.trim();
+                }
+                if (room.id && room.id.trim().length > 0) {
+                    return room.id.trim();
+                }
+                return null;
+            }
+
+            function setShortLinkContext({ polo, building, floor, room, codeOverride = null }) {
+                if (!isRoomEligibleForShortLink(room)) {
+                    shortLinkContext = null;
+                    return;
+                }
+
+                const resolvedCode = (codeOverride && codeOverride.trim()) || getRoomShortCode(room);
+                if (!resolvedCode) {
+                    shortLinkContext = null;
+                    return;
+                }
+
+                shortLinkContext = {
+                    polo,
+                    building,
+                    floor,
+                    code: resolvedCode
+                };
+            }
+
+            function clearShortLinkContext() {
+                if (shortLinkContext) {
+                    shortLinkContext = null;
+                }
+            }
+
+            function registerMapInteractionGuards() {
+                if (mapInteractionGuardsInstalled || !map) return;
+
+                map.on('dragstart', () => {
+                    clearShortLinkContext();
+                });
+
+                map.on('zoomstart', () => {
+                    if (!programmaticMapChange) {
+                        clearShortLinkContext();
+                    }
+                });
+
+                map.on('moveend', () => {
+                    clearProgrammaticMapChangeFlag();
+                    updateURL(true);
+                });
+
+                map.on('zoomend', () => {
+                    clearProgrammaticMapChangeFlag();
+                    updateURL(true);
+                });
+
+                mapInteractionGuardsInstalled = true;
+            }
+
+            function ensurePanByPatch() {
+                if (!map || mapPanByPatched || typeof L === 'undefined') return;
+
+                const wrapPanBy = (originalFn) => {
+                    if (typeof originalFn !== 'function') return null;
+                    return function (offset, options) {
+                        let pointOffset = L.point(offset);
+                        if (isMapFlipped && !programmaticMapChange) {
+                            pointOffset = L.point(-pointOffset.x, -pointOffset.y);
+                        }
+                        return originalFn.call(this, pointOffset, options);
+                    };
+                };
+
+                originalMapPanBy = originalMapPanBy || map.panBy;
+                originalMapInternalPanBy = originalMapInternalPanBy || (typeof map._panBy === 'function' ? map._panBy : null);
+
+                if (originalMapPanBy) {
+                    map.panBy = wrapPanBy(originalMapPanBy);
+                }
+                if (originalMapInternalPanBy) {
+                    map._panBy = wrapPanBy(originalMapInternalPanBy);
+                }
+
+                mapPanByPatched = true;
+            }
+
+            function registerFlipDragHandler() {
+                if (flipDragHandlerRegistered || !map || !map.dragging || !map.dragging._draggable || typeof map.dragging._draggable.on !== 'function') {
+                    return;
+                }
+
+                const draggable = map.dragging._draggable;
+                draggable.on('predrag', function () {
+                    if (!isMapFlipped || !this._newPos || !this._startPos) return;
+                    const offsetX = this._newPos.x - this._startPos.x;
+                    const offsetY = this._newPos.y - this._startPos.y;
+                    this._newPos = L.point(this._startPos.x - offsetX, this._startPos.y - offsetY);
+                });
+
+                flipDragHandlerRegistered = true;
+            }
 
             function updateClearButtonsVisibility() {
                 if (clearSearchBtn) {
@@ -2680,8 +2854,8 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
 
                 const center = [parseFloat(room.coordinates.y), parseFloat(room.coordinates.x)];
                 const zoom = room.coordinates.zoom != null ? parseFloat(room.coordinates.zoom) : 2;
+                const isMobileDevice = typeof isMobile === 'function' ? isMobile() : window.innerWidth <= 880;
 
-                // Calcola la distanza dalla posizione corrente per adattare la durata
                 const currentCenter = map.getCenter();
                 const currentZoom = map.getZoom();
                 const distance = Math.sqrt(
@@ -2690,36 +2864,42 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                 );
                 const zoomDiff = Math.abs(zoom - currentZoom);
 
-                // Per distanze molto piccole, usa setView istantaneo (più fluido)
-                // Altrimenti usa flyTo con durata ottimizzata
-                if (distance < 0.01 && zoomDiff < 0.5) {
-                    // Movimento molto piccolo - transizione CSS istantanea (60fps garantiti)
-                    map.setView(center, zoom, {
-                        animate: true,
-                        duration: 0.25,
-                        easeLinearity: 0.1
-                    });
-                } else {
-                    // Calcola durata dinamica basata sulla distanza e differenza di zoom
-                    const baseDuration = 0.4; // Durata minima per flyTo
-                    const maxDuration = 1.0; // Durata massima ridotta
-                    const distanceFactor = Math.min(distance * 50, 1);
-                    const zoomFactor = Math.min(zoomDiff * 0.2, 0.5);
-                    const duration = baseDuration + (maxDuration - baseDuration) * Math.max(distanceFactor, zoomFactor);
-
-                    // Usa flyTo con easing ottimizzato per 60fps
-                    map.flyTo(center, zoom, {
-                        duration: duration,
-                        easeLinearity: 0.1, // Easing più lineare = animazione più fluida
-                        noMoveStart: true // Evita eventi inutili che rallentano
-                    });
+                const microMove = distance < 0.003 && zoomDiff < 0.03;
+                if (microMove) {
+                    markProgrammaticMapChange();
+                    map.setView(center, zoom, { animate: false });
+                    return true;
                 }
 
-                return true; // Centratura eseguita
+                const factor = Math.max(
+                    Math.min(distance * 35, 1),
+                    Math.min(zoomDiff * 0.35, 1)
+                );
+
+                const minDuration = isMobileDevice ? 0.22 : 0.26;
+                const maxDuration = isMobileDevice ? 0.45 : 0.55;
+                const duration = minDuration + (maxDuration - minDuration) * factor;
+
+                markProgrammaticMapChange();
+                map.flyTo(center, zoom, {
+                    animate: true,
+                    duration,
+                    easeLinearity: 0.5,
+                    noMoveStart: true
+                });
+
+                return true;
             }
 
             // Nuova funzione per selezionare un'aula senza ricaricare la mappa
             function selectRoom(polo, edificio, piano, room) {
+                const eligibleForShortLink = isRoomEligibleForShortLink(room);
+                if (eligibleForShortLink) {
+                    setShortLinkContext({ polo, building: edificio, floor: piano, room });
+                } else {
+                    clearShortLinkContext();
+                }
+
                 // Verifica se siamo già sul piano corretto
                 const isSameLocation = (
                     selectedPolo === polo &&
@@ -2733,6 +2913,10 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                         selectView('top', true, null, room);
                     } else {
                         centerMapOnRoom(room);
+                    }
+
+                    if (eligibleForShortLink) {
+                        updateURL(true);
                     }
                 } else {
                     // Cambio di piano necessario, ricarica la mappa in vista top con le coordinate dell'aula
@@ -3724,14 +3908,26 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
 
                 const params = new URLSearchParams();
 
-                if (settingsConfig.sharePath) {
+                const canUseShortLink = Boolean(
+                    settingsConfig.sharePath &&
+                    shortLinkContext &&
+                    shortLinkContext.code &&
+                    shortLinkContext.polo === selectedPolo &&
+                    shortLinkContext.building === selectedBuilding &&
+                    shortLinkContext.floor === selectedFloor
+                );
+
+                if (canUseShortLink) {
+                    params.set('p', selectedPolo);
+                    params.set('c', shortLinkContext.code);
+                } else if (settingsConfig.sharePath) {
                     params.set('p', selectedPolo);
                     params.set('b', selectedBuilding);
                     params.set('f', selectedFloor);
                     params.set('v', currentView);
                 }
 
-                if (settingsConfig.shareCoordinates && map) {
+                if (!canUseShortLink && settingsConfig.shareCoordinates && map) {
                     const center = map.getCenter();
                     const zoom = map.getZoom();
                     params.set('x', center.lng.toFixed(2));
@@ -3750,12 +3946,52 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                 }
             }
 
+            function findRoomByShortCode(poloName, code) {
+                if (!code || !data.polo || !data.polo[poloName]) return null;
+
+                const normalizedCode = normalizeShortCode(code);
+                if (!normalizedCode) return null;
+
+                const buildings = data.polo[poloName].edificio || {};
+                const buildingNames = Object.keys(buildings);
+
+                for (const buildingName of buildingNames) {
+                    const building = buildings[buildingName];
+                    const floors = building.piano || {};
+                    const floorNames = Object.keys(floors);
+
+                    for (const floorName of floorNames) {
+                        const floorData = floors[floorName];
+                        const rooms = Array.isArray(floorData)
+                            ? floorData
+                            : (floorData?.aule ? Object.values(floorData.aule) : []);
+
+                        for (const room of rooms) {
+                            if (!room) continue;
+
+                            const nameMatch = normalizeShortCode(room.nome) === normalizedCode;
+                            const idMatch = normalizeShortCode(room.id) === normalizedCode;
+                            const aliasMatch = Array.isArray(room.alias)
+                                ? room.alias.some(alias => normalizeShortCode(alias) === normalizedCode)
+                                : false;
+
+                            if (nameMatch || idMatch || aliasMatch) {
+                                return { edificio: buildingName, piano: floorName, room };
+                            }
+                        }
+                    }
+                }
+
+                return null;
+            }
+
             // Funzione per gestire il caricamento iniziale basato sull'URL
             function handleInitialLoad() {
                 const params = new URLSearchParams(window.location.search);
                 const poloParam = params.get('p') || params.get('polo');
-                const buildingParam = params.get('b') || params.get('edificio');
-                const floorParam = params.get('f') || params.get('piano');
+                let buildingParam = params.get('b') || params.get('edificio');
+                let floorParam = params.get('f') || params.get('piano');
+                const roomParam = params.get('c');
                 const viewParam = params.get('v');
                 const viewParams = {
                     x: params.get('x'),
@@ -3766,10 +4002,52 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                 const polos = Object.keys(data.polo);
                 if (polos.length === 0) return;
 
-                const poloToSelect = poloParam && data.polo[poloParam] ? poloParam : polos[0];
+                let poloToSelect = poloParam && data.polo[poloParam] ? poloParam : polos[0];
+                let roomFromShortLink = null;
+
+                if (roomParam) {
+                    roomFromShortLink = findRoomByShortCode(poloToSelect, roomParam);
+
+                    if (!roomFromShortLink && poloParam && data.polo[poloParam]) {
+                        roomFromShortLink = findRoomByShortCode(poloParam, roomParam);
+                        if (roomFromShortLink) {
+                            poloToSelect = poloParam;
+                        }
+                    }
+
+                    if (!roomFromShortLink) {
+                        for (const poloName of polos) {
+                            if (roomFromShortLink) break;
+                            const lookup = findRoomByShortCode(poloName, roomParam);
+                            if (lookup) {
+                                roomFromShortLink = lookup;
+                                poloToSelect = poloName;
+                            }
+                        }
+                    }
+
+                    if (roomFromShortLink) {
+                        buildingParam = roomFromShortLink.edificio;
+                        floorParam = roomFromShortLink.piano;
+                        setShortLinkContext({
+                            polo: poloToSelect,
+                            building: buildingParam,
+                            floor: floorParam,
+                            room: roomFromShortLink.room,
+                            codeOverride: roomParam
+                        });
+                    }
+                }
 
                 // Passa i parametri dell'edificio, del piano e della vista
-                selectPolo(poloToSelect, buildingParam, floorParam, viewParams, viewParam);
+                selectPolo(
+                    poloToSelect,
+                    buildingParam,
+                    floorParam,
+                    viewParams,
+                    viewParam,
+                    roomFromShortLink ? roomFromShortLink.room : null
+                );
             }
 
             // Funzione per chiudere la sidebar (logica unificata)
@@ -3808,34 +4086,47 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
 
             // Listener per i nuovi bottoni di zoom
             zoomInBtn.addEventListener('click', () => {
+                clearShortLinkContext();
                 if (map) {
                     map.zoomIn();
                 }
             });
 
             zoomOutBtn.addEventListener('click', () => {
+                clearShortLinkContext();
                 if (map) {
                     map.zoomOut();
                 }
             });
 
             resetZoomBtn.addEventListener('click', () => {
+                clearShortLinkContext();
                 if (map && svgOverlay) {
+                    markProgrammaticMapChange();
                     map.fitBounds(svgOverlay.getBounds());
                 }
             });
 
             perspectiveViewBtn.addEventListener('click', () => {
+                clearShortLinkContext();
                 if (currentView !== 'perspective') {
                     selectView('perspective');
                 }
             });
 
             topViewBtn.addEventListener('click', () => {
+                clearShortLinkContext();
                 if (currentView !== 'top') {
                     selectView('top');
                 }
             });
+
+            if (flipViewBtn) {
+                flipViewBtn.addEventListener('click', () => {
+                    clearShortLinkContext();
+                    setMapFlipState(!isMapFlipped);
+                });
+            }
 
             function isMobile() {
                 return window.innerWidth <= 880;
@@ -3887,7 +4178,10 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                         </span>
                         <span>Polo ${polo.charAt(0).toUpperCase() + polo.slice(1)}</span>
                     `;
-                    button.addEventListener('click', () => selectPolo(polo));
+                    button.addEventListener('click', () => {
+                        clearShortLinkContext();
+                        selectPolo(polo);
+                    });
                     polosList.appendChild(button);
                 });
             }
@@ -3928,7 +4222,10 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                         </span>
                         <span>${t('building')} ${building.toUpperCase()}</span>
                     `;
-                    button.addEventListener('click', () => selectBuilding(building));
+                    button.addEventListener('click', () => {
+                        clearShortLinkContext();
+                        selectBuilding(building);
+                    });
                     buildingsList.appendChild(button);
                 });
             }
@@ -3945,7 +4242,10 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                         </span>
                         <span>${t('floor')} ${floor}</span>
                     `;
-                    button.addEventListener('click', () => selectFloor(floor));
+                    button.addEventListener('click', () => {
+                        clearShortLinkContext();
+                        selectFloor(floor);
+                    });
                     floorsList.appendChild(button);
                 });
             }
@@ -4100,6 +4400,18 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                     roomElement.addEventListener('click', (e) => {
                         e.preventDefault();
 
+                        if (isRoomEligibleForShortLink(room)) {
+                            setShortLinkContext({
+                                polo: selectedPolo,
+                                building: selectedBuilding,
+                                floor: selectedFloor,
+                                room
+                            });
+                            updateURL(true);
+                        } else {
+                            clearShortLinkContext();
+                        }
+
                         // Centra la mappa sull'aula usando la funzione centralizzata
                         centerMapOnRoom(room);
 
@@ -4117,6 +4429,7 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
 
             function selectBuilding(building, floorToSelect = null, viewParams = null, viewToSelect = null, roomData = null) {
                 selectedBuilding = building;
+                updateFlipButtonVisibility(building);
                 populateFloors(building);
 
                 // Aggiorna lo stile dei bottoni degli edifici
@@ -4182,6 +4495,26 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                 } else {
                     perspectiveViewBtn.classList.add('active');
                     topViewBtn.classList.remove('active');
+                }
+            }
+
+            function setMapFlipState(shouldFlip) {
+                if (!mapContainer) return;
+                isMapFlipped = shouldFlip;
+                mapContainer.classList.toggle('map-flipped', shouldFlip);
+                if (flipViewBtn) {
+                    flipViewBtn.classList.toggle('active', shouldFlip);
+                    flipViewBtn.setAttribute('aria-pressed', shouldFlip ? 'true' : 'false');
+                }
+            }
+
+            function updateFlipButtonVisibility(building) {
+                if (!flipViewBtn) return;
+                const shouldShow = building && building.toLowerCase() === 'b';
+                flipViewBtn.classList.toggle('hidden', !shouldShow);
+                flipViewBtn.disabled = !shouldShow;
+                if (!shouldShow && isMapFlipped) {
+                    setMapFlipState(false);
                 }
             }
 
@@ -4481,20 +4814,19 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                         zoomControl: false,
                         attributionControl: false
                     });
+                    registerMapInteractionGuards();
+                    registerFlipDragHandler();
                 } else {
                     // Rimuovi il layer SVG precedente se esiste
                     if (svgOverlay) {
                         map.removeLayer(svgOverlay);
                     }
+                    registerFlipDragHandler();
                 }
+                ensurePanByPatch();
 
                 // Crea e aggiungi overlay SVG
                 svgOverlay = L.imageOverlay(cacheData.dataUrl, cacheData.bounds).addTo(map);
-
-                // Aggiungi listener per aggiornare URL
-                map.on('moveend zoomend', () => {
-                    updateURL(true);
-                });
 
                 // Imposta la vista iniziale
                 // Priorità: 1) coordinate della room, 2) viewParams dall'URL, 3) fitBounds di default
@@ -4502,14 +4834,17 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                     // Usa le coordinate dell'aula se presenti
                     const center = [parseFloat(roomData.coordinates.y), parseFloat(roomData.coordinates.x)];
                     const zoom = roomData.coordinates.zoom != null ? parseFloat(roomData.coordinates.zoom) : 2;
+                    markProgrammaticMapChange();
                     map.setView(center, zoom);
                 } else if (viewParams && viewParams.x && viewParams.y && viewParams.z) {
                     // Usa i parametri salvati dall'URL
                     const center = [parseFloat(viewParams.y), parseFloat(viewParams.x)];
                     const zoom = parseFloat(viewParams.z);
+                    markProgrammaticMapChange();
                     map.setView(center, zoom);
                 } else {
                     // Adatta alla vista
+                    markProgrammaticMapChange();
                     map.fitBounds(cacheData.bounds);
                 }
 

@@ -50,6 +50,7 @@
 [<img src="https://wsrv.nl/?url=github.com/piorpiedev.png?w=64&h=64&mask=circle&fit=cover" width="46" height="46" alt="piorpiedev" />](https://github.com/piorpiedev)
 [<img src="https://wsrv.nl/?url=github.com/L-myself.png?w=64&h=64&mask=circle&fit=cover" width="46" height="46" alt="piorpiedev" />](https://github.com/L-myself)
 [<img src="https://wsrv.nl/?url=github.com/gregoriop06.png?w=64&h=64&mask=circle&fit=cover" width="46" height="46" alt="Gregorio Pescucci" />](https://github.com/gregoriop06)
+[<img src="https://wsrv.nl/?url=github.com/alesmk.png?w=64&h=64&mask=circle&fit=cover" width="46" height="46" alt="Alessia" />](https://github.com/alesmk)
 
 *Un ringraziamento speciale a chi ha dedicato il proprio tempo per la raccolta dati nelle aule.*
 
@@ -418,6 +419,18 @@ la parte
 permetterà a chi apre il link di visualizzare **lo stesso polo, edificio, piano** e anche l’**elemento evidenziato** di chi lo ha condiviso.
 
 Se la funzione non dovesse funzionare, apri la **barra di ricerca**, digita `impostazioni` e verifica che le opzioni **“Condividi polo/edificio/piano”** e **“Condividi coordinate mappa”** siano attive.
+
+Inoltre, se utilizzi la funzione di **ricerca** o selezioni un elemento dalla **sidebar** senza muoverti sulla mappa, il link generato sarà molto più breve e includerà solo il *polo* e il nome abbreviato (se disponibile) dell’aula, dipartimento, laboratorio e sala.
+
+Ad esempio:
+```
+https://plumkewe.github.io/dove-unipi/?p=fibonacci&c=D2
+```
+
+Corrisponde a:
+```
+https://plumkewe.github.io/dove-unipi/?p=fibonacci&b=d&f=0&v=top&x=380.00&y=296.00&z=2.00
+```
 
 <hr>
 
