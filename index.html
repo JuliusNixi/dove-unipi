@@ -1157,12 +1157,41 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
             z-index: 1;
             /* Mappa al livello più basso */
             position: relative;
-            transition: transform 0.3s ease-in-out;
+            will-change: transform;
+            backface-visibility: hidden;
+            contain: layout paint;
+            transform: translateZ(0);
             transform-origin: center center;
         }
 
+        #map.map-flip-animating {
+            transition: transform 0.3s ease-in-out;
+        }
+
         #map.map-flipped {
-            transform: rotate(180deg);
+            transform: rotate(180deg) translateZ(0);
+        }
+
+        .leaflet-map-pane,
+        .leaflet-pane,
+        .leaflet-overlay-pane,
+        .leaflet-image-layer {
+            will-change: transform;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+        }
+
+        .svg-floor-overlay {
+            image-rendering: optimizeSpeed;
+            pointer-events: none;
+        }
+
+        @media (pointer: coarse) {
+            #map,
+            #map .leaflet-pane,
+            #map .leaflet-overlay-pane {
+                touch-action: none;
+            }
         }
 
         main#main-content,
@@ -1920,8 +1949,7 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
 
 <body class="bg-gray-100 text-gray-900 no-transition text-normal">
 
-    <section style="position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden;"
-        aria-hidden="true">
+    <section style="position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden;">
 
         <h2 id="about-dove-unipi">DOVE?UNIPI - La tua guida al Polo Fibonacci</h2>
 
@@ -2650,6 +2678,7 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
             let programmaticMapChange = false;
             let programmaticMapChangeResetTimeout = null;
             let isMapFlipped = false;
+            let mapFlipAnimationTimeout = null;
             let originalMapPanBy = null;
             let originalMapInternalPanBy = null;
             let mapPanByPatched = false;
@@ -4501,7 +4530,18 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
             function setMapFlipState(shouldFlip) {
                 if (!mapContainer) return;
                 isMapFlipped = shouldFlip;
-                mapContainer.classList.toggle('map-flipped', shouldFlip);
+                if (mapFlipAnimationTimeout) {
+                    clearTimeout(mapFlipAnimationTimeout);
+                    mapFlipAnimationTimeout = null;
+                }
+                mapContainer.classList.add('map-flip-animating');
+                requestAnimationFrame(() => {
+                    mapContainer.classList.toggle('map-flipped', shouldFlip);
+                    mapFlipAnimationTimeout = setTimeout(() => {
+                        mapContainer.classList.remove('map-flip-animating');
+                        mapFlipAnimationTimeout = null;
+                    }, 320);
+                });
                 if (flipViewBtn) {
                     flipViewBtn.classList.toggle('active', shouldFlip);
                     flipViewBtn.setAttribute('aria-pressed', shouldFlip ? 'true' : 'false');
@@ -4807,10 +4847,18 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
             function renderCachedSVG(cacheData, viewParams = null, roomData = null) {
                 // Inizializza o re-inizializza la mappa
                 if (!map) {
+                    const isMobileDevice = typeof isMobile === 'function' ? isMobile() : window.innerWidth <= 880;
                     map = L.map('map', {
                         crs: L.CRS.Simple,
                         minZoom: -2,
                         maxZoom: 4,
+                        zoomAnimation: !isMobileDevice,
+                        fadeAnimation: !isMobileDevice,
+                        markerZoomAnimation: !isMobileDevice,
+                        inertia: !isMobileDevice,
+                        touchZoom: isMobileDevice ? 'center' : true,
+                        tap: !isMobileDevice,
+                        preferCanvas: true,
                         zoomControl: false,
                         attributionControl: false
                     });
@@ -4826,7 +4874,10 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                 ensurePanByPatch();
 
                 // Crea e aggiungi overlay SVG
-                svgOverlay = L.imageOverlay(cacheData.dataUrl, cacheData.bounds).addTo(map);
+                svgOverlay = L.imageOverlay(cacheData.dataUrl, cacheData.bounds, {
+                    className: 'svg-floor-overlay',
+                    interactive: false
+                }).addTo(map);
 
                 // Imposta la vista iniziale
                 // Priorità: 1) coordinate della room, 2) viewParams dall'URL, 3) fitBounds di default
