@@ -2,7 +2,7 @@
   <img src="assets/logo/logo.svg" alt="DOVE? UniPI Logo" width="200">
 </p>
 
-<h1 align="center"> DOVE?UniPi </h1>
+<h1 align="center"> DOVE?UNIPI </h1>
 
 <p align="center">Un'applicazione web single-page (SPA) per esplorare gli edifici, i piani e le aule del Polo Fibonacci dell’Università di Pisa.</p>
 
@@ -39,6 +39,7 @@
   - [Lingue supportate](#lingue-supportate)
   - [Altri dati](#altri-dati)
     - [Distributori d'acqua](#distributori-dacqua)
+- [Telegram Bot](#telegram-bot)
 - [Funzionalità che vorrei aggiungere](#funzionalità-che-vorrei-aggiungere)
 - [Problemi noti](#problemi-noti)
   
@@ -107,7 +108,7 @@ A dimostrazione di ciò, ecco alcuni messaggi reali presi da un gruppo Telegram:
         ├── edificio/
         │   ├── a/
         │   │   └── piano/
-        │   │       ├── 0-top-max.svg <- top sta per vista e max sta per non ottimizzato (non si usano)
+        │   │       ├── 0-top-max.svg <- top sta per vista e max sta per non si usano
         │   │       ├── 0-top.svg
         │   │       ├── 0.dwg <- file CAD del piano 
         │   │       ├── 0.svg <- vista prospettica
@@ -440,7 +441,7 @@ Attualmente sono supportate due lingue: **italiano** e **inglese.**
 
 In futuro verranno aggiunte altre **lingue!**
 
-> [!TIP]
+> [!NOTE]
 > **Vuoi contribuire con una traduzione?**  
 > Apri una [issue](https://github.com/plumkewe/dove-unipi/issues) oppure inviami un'email a: [lyubomyr.malay@icloud.com](mailto:lyubomyr.malay@icloud.com)  
 > **Grazie per il supporto!**
@@ -448,8 +449,6 @@ In futuro verranno aggiunte altre **lingue!**
 <hr>
 
 ### Altri dati
-
-<p align="right">(<a href="#indice">indice</a>)</p>
 
 #### Distributori d'acqua
 
@@ -459,13 +458,41 @@ Per attivarla, apri la **barra di ricerca**, digita `impostazioni` e assicurati 
 
 Puoi cercare i distributori digitando `Dist...` nella barra di ricerca. I risultati saranno evidenziati con un **colore blu**, come omaggio al progetto [**CoSA** dell'Università di Pisa ↗](https://sostenibile.unipi.it)
 
-> [!TIP]
+> [!NOTE]
 > **Hai trovato distributori non mappati?**  
 > Ci servono dati sulla posizione di **distributori d'acqua**, **distributori di caffè**, **distributori di cibo...**
 > Apri una [issue](https://github.com/plumkewe/dove-unipi/issues) oppure inviami un'email a: [lyubomyr.malay@icloud.com](mailto:lyubomyr.malay@icloud.com)  
 > **Grazie per il supporto!**
 
-<hr>
+## Telegram Bot
+
+<p align="right">(<a href="#indice">indice</a>)</p>
+
+È stato creato un **Telegram Bot inline**, attualmente in fase di **alfa test**, ma già disponibile per essere provato. Puoi accedervi seguendo questo link: [**@doveunipibot**](https://t.me/doveunipibot).
+
+Il bot mostra le stesse informazioni disponibili tramite la ricerca sul sito. Al momento, le sue funzionalità sono limitate, ma verranno migliorate nel tempo per offrire un'esperienza più completa.
+
+<table>
+  <tr>
+    <td><img src="assets/screenshots/tg-bot1.JPEG" alt="Screenshot Telegram Bot 1"></td>
+    <td><img src="assets/screenshots/tg-bot2.JPEG" alt="Screenshot Telegram Bot 2"></td>
+    <td><img src="assets/screenshots/tg-bot3.JPEG" alt="Screenshot Telegram Bot 3"></td>
+  </tr>
+</table>
+
+> [!NOTE]
+> **Hai suggerimenti o feedback sul bot?**  
+> Apri una [issue](https://github.com/plumkewe/dove-unipi/issues) oppure inviami un'email a: [lyubomyr.malay@icloud.com](mailto:lyubomyr.malay@icloud.com).  
+> **Grazie per il supporto!**
+
+**Hostato su**
+
+<p>
+  <a>
+    <img src="https://simpleicons.org/icons/render.svg" alt="Render" width="32" height="32">
+  </a>
+</p>
+
 
 ## Funzionalità che vorrei aggiungere
 
