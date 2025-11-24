@@ -52,6 +52,7 @@
 [<img src="https://wsrv.nl/?url=github.com/L-myself.png?w=64&h=64&mask=circle&fit=cover" width="46" height="46" alt="piorpiedev" />](https://github.com/L-myself)
 [<img src="https://wsrv.nl/?url=github.com/gregoriop06.png?w=64&h=64&mask=circle&fit=cover" width="46" height="46" alt="Gregorio Pescucci" />](https://github.com/gregoriop06)
 [<img src="https://wsrv.nl/?url=github.com/alesmk.png?w=64&h=64&mask=circle&fit=cover" width="46" height="46" alt="Alessia" />](https://github.com/alesmk)
+[<img src="https://wsrv.nl/?url=github.com/juliusnixi.png?w=64&h=64&mask=circle&fit=cover" width="46" height="46" alt="JuliusNixi" />](https://github.com/juliusnixi)
 
 *Un ringraziamento speciale a chi ha dedicato il proprio tempo per la raccolta dati nelle aule.*
 
