@@ -366,5 +366,21 @@
   "search_suggestion_feedback_hint": {
     "original": "Premi invio per inviare feedback",
     "translation": "Press enter to send feedback"
+  },
+  "availability_unavailable": {
+    "original": "Information not available",
+    "translation": "Information not available"
+  },
+  "availability_free": {
+    "original": "Classroom free",
+    "translation": "Classroom free"
+  },
+  "current_occupancy": {
+    "original": "Current occupancy",
+    "translation": "Current occupancy"
+  },
+  "loading_occupancy": {
+    "original": "Loading occupancy...",
+    "translation": "Loading occupancy..."
   }
 }

@@ -3278,6 +3278,20 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                             resultElement.classList.add('water-dispenser');
                         }
 
+                        // Occupazione corrente delle aule
+                        const availabilitySource = window.classroomAvaibility || {};
+                        const classroomName = result.room?.nome || '';
+                        const hasAvailability = classroomName && Object.prototype.hasOwnProperty.call(availabilitySource, classroomName);
+                        // Mostra il caricamento se non ancora disponibile
+                        const occupancyText = hasAvailability ? availabilitySource[classroomName] : t('loading_occupancy');
+                        const occupancyLabel = t('current_occupancy');
+                        const availabilityHTML = resultElement.innerHTML = `
+                            <div class="details">
+                                ${occupancyLabel}: <span class="occupancy">${occupancyText}</span>
+                            </div>
+                        `;
+                        // Fine occupazione corrente delle aule
+
                         resultElement.innerHTML = `
                             <div class="title">${result.room.nome}</div>
                             <div class="details">
@@ -3285,6 +3299,7 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                                 ${t('building')} ${result.edificio.toUpperCase()} <span class="material-symbols-outlined" style="font-size: 14px; vertical-align: -3px;">chevron_right</span>
                                 ${t('floor')} ${result.piano}${capacityDetails ? '<div>' + t('capacity') + ' ' + capacityDetails + '</div>' : ''}
                             </div>
+                            ${availabilityHTML}
                         `;
                         resultElement.addEventListener('click', () => {
                             selectRoom(result.polo, result.edificio, result.piano, result.room);
@@ -4929,6 +4944,103 @@ RMMMMRMMMMME        EMMMMMMMMMMMMM!
                     applyTranslations();
                 }
             });
+
+        // Occupazione corrente delle aule
+        window.classroomAvaibility = window.classroomAvaibility || {};
+        function populateClassroomAvailability() {
+
+            if (!data?.polo) {
+                // Dati stanze non ancora caricati, riprovo...
+                setTimeout(populateClassroomAvailability, 100);
+                return;
+            }
+
+            Object.entries(data.polo).forEach(([poloName, polo]) => {
+                Object.entries(polo.edificio || {}).forEach(([buildingName, building]) => {
+                    Object.entries(building.piano || {}).forEach(([floorName, floorData]) => {
+                        const rooms = Array.isArray(floorData)
+                            ? floorData
+                            : (floorData?.aule ? Object.values(floorData.aule) : []);
+
+                        rooms.forEach(room => {
+                            if (room?.nome) {
+                                getClassroomAvailability(room.nome).then(availability => {
+                                    const code = Number(Object.keys(availability)[0]);
+                                    const scheduleStrArray = availability[code].split("|");
+                                    // code 1 = occupata, 0 = libera, 2 = informazioni non disponibili
+                                    // Parsing solamente per le aule occupate, altrimenti il risultato è già finale
+                                    window.classroomAvaibility[room.nome] = code === 1 ?
+                                     (scheduleStrArray[0] + " " + scheduleStrArray[1]) : 
+                                     availability[code];
+                                });
+                            }
+                        });
+                    });
+                });
+            });
+        }
+
+        function getClassroomAvailability(classroom) {
+            const unavailableLabel = t('availability_unavailable');
+            const freeLabel = t('availability_free');
+
+            const API_ENDPOINT = 'https://vps.giulionisi.me:54321/api/';
+            const AVAIBILITY_ENDPOINT = API_ENDPOINT + 'current_schedule_given_pole_and_room';
+            const POLE = "fibonacci";
+            const CLASSROOM_URL_ENCODED = classroom.toLowerCase().replace("aula", "fib").replace(" ", "%20");
+            const API_POLE_ARG = `pole_name`;
+            const API_CLASSROOM_ARG = `classroom`;
+
+            return fetch(`${AVAIBILITY_ENDPOINT}?${API_POLE_ARG}=${POLE}&${API_CLASSROOM_ARG}=${CLASSROOM_URL_ENCODED}`)
+                .then(response => {
+                    // 2 significa che si è verificato un errore, fallback a informazioni non disponibili
+                    if (!response || !response.ok) {
+                        // Errore API
+                        console.warn('API classroom availability response not ok:', response.statusText);
+                        return {2: unavailableLabel};
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (!data || 2 in data) {
+                        return {2: unavailableLabel};
+                    }
+                    const classroomKey = classroom.replace("Aula ", "Fib ");
+                    if (data && data[classroomKey] !== undefined) {
+                        // Aula libera
+                        if (data[classroomKey] === "") return {0: freeLabel};
+                        // Aula con occupazione
+                        return {1: data[classroomKey]};
+                    } else {
+                        // Aula non trovata nell'API, ad esempio per quelle del dipartimento non visibili su UniversityPlanner
+                        return {2: unavailableLabel};
+                    }
+                })
+                .catch(error => {
+                    console.warn('API classroom availability error:', error);
+                    return {2: unavailableLabel};
+                });
+        }
+        // Appena la pagina è caricata, inizio a popolare le occupazioni
+        populateClassroomAvailability();
+
+        // Aggiorna l'occupazione mostrata nei risultati di una ricerca se diventano disponibili
+        function refreshSearchResultsOccupancy() {
+
+            const classroomNames = document.getElementsByClassName("title");
+            let counter = 0;
+            document.querySelectorAll(".occupancy").forEach(occupancyElement => {
+                const classroomName = classroomNames[counter]?.textContent;
+                if (classroomName && window.classroomAvaibility[classroomName] !== undefined) {
+                    occupancyElement.textContent = window.classroomAvaibility[classroomName];
+                }
+                counter++;
+            });
+
+        }
+        setInterval(refreshSearchResultsOccupancy, 500);
+        // Fine occupazione corrente aule
+
         } // End of initApp function
     </script>
 
